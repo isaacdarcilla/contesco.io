@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "encoding": "^0.1.13",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
     "postcss": "^8.4.21",

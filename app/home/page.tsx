@@ -9,7 +9,7 @@ const lora = Lora({ subsets: ["latin"] });
 export default function HomePage() {
   return (
     <main className={lora.className}>
-      <div className="bg-primary h-screen w-ful relative flex overflow-hidden">
+      <div className="bg-primary h-screen w-full flex overflow-hidden">
         <Sidebar>
           <SidebarButton content="Home" link="/home">
             <Home size={18} />
