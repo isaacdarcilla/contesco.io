@@ -7,17 +7,21 @@ module.exports = {
 
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx}",
+
+    // Plugin
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/flowbite-react/**/*.js",
   ],
   theme: {
     extend: {
       backgroundColor: {
-        supabase: "#1C1C1C",
-        "supabase-hover": "#232323",
+        primary: "#1C1C1C",
+        secondary: "#232323",
       },
       borderColor: {
-        supabase: "#232323",
+        primary: "#1C1C1C",
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
