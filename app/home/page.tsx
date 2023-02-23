@@ -6,15 +6,15 @@ import { Lora } from "@next/font/google";
 
 const lora = Lora({ subsets: ["latin"] });
 
-export default function Dashboard() {
+export default function HomePage() {
   return (
     <main className={lora.className}>
       <div className="bg-primary h-screen w-ful relative flex overflow-hidden">
         <Sidebar>
-          <SidebarButton content="Home">
+          <SidebarButton content="Home" link="/home">
             <Home size={18} />
           </SidebarButton>
-          <SidebarButton content="Setting">
+          <SidebarButton content="Setting" link="/home">
             <Settings size={18} />
           </SidebarButton>
         </Sidebar>
