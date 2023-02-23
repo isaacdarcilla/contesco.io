@@ -2,9 +2,6 @@
 
 import { Button } from "flowbite-react";
 import { Bell } from "react-feather";
-import { Inter } from '@next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function NavBar() {
   return (
