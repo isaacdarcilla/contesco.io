@@ -2,7 +2,7 @@ import SidebarButton from "@/components/sidebar/SidebarButton";
 import { Home, Settings } from "react-feather";
 import Sidebar from "@/components/sidebar/Sidebar";
 import NavBar from "@/components/navbar/NavBar";
-import { Lora } from "@next/font/google";
+import { Lora } from "next/font/google";
 
 const lora = Lora({ subsets: ["latin"] });
 

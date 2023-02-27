@@ -1,6 +1,6 @@
 "use client";
 
-import { Lora } from "@next/font/google";
+import { Lora } from "next/font/google";
 
 const lora = Lora({ subsets: ["latin"] });
 
