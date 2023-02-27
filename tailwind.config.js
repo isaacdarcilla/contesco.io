@@ -17,6 +17,8 @@ module.exports = {
       backgroundColor: {
         primary: "#1C1C1C",
         secondary: "#232323",
+        "button-green": "#2B825B",
+        "button-green-hover": "#2B826C",
       },
       borderColor: {
         primary: "#1C1C1C",
