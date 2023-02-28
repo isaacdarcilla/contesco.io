@@ -2,9 +2,18 @@
 
 import { Tooltip } from "flowbite-react";
 import Link from "next/link";
-import { User } from "react-feather";
+import { LogOut } from "react-feather";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar({ children }: { children?: React.ReactNode }) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+  };
+
   return (
     <>
       <aside className="flex flex-col items-center w-14 overflow-hidden text-gray-400 bg-secondary h-screen border-r border-primary">
@@ -22,16 +31,17 @@ export default function Sidebar({ children }: { children?: React.ReactNode }) {
         <div className="flex flex-col items-center mt-0 absolute bottom-2">
           <Tooltip
             className="mt-1 rounded-sm"
-            content="Account"
+            content="Logout"
             placement="right"
             style="light"
           >
-            <Link
-              href="/account"
-              className="flex items-center justify-center w-10 h-10 mt-2 rounded hover:bg-primary hover:text-gray-300"
-            >
-              <User size={18} className="text-white" />
-            </Link>
+            <div className="flex items-center justify-center w-10 h-10 mt-2 rounded hover:bg-primary hover:text-gray-300">
+              <LogOut
+                onClick={() => handleLogout()}
+                size={18}
+                className="text-white"
+              />
+            </div>
           </Tooltip>
         </div>
       </aside>

@@ -2,12 +2,14 @@ export default function TextInput({
   label,
   type,
   placeholder,
+  required = false,
   onChange,
 }: {
   label: string;
   type: string;
   placeholder: string;
-  onChange: () => void;
+  required: boolean;
+  onChange: (e?: any) => void;
 }) {
   return (
     <>
@@ -17,9 +19,10 @@ export default function TextInput({
         </label>
         <input
           type={type}
-          className="shadow-sm px-4 bg-secondary border border-gray-500 text-gray-700 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+          className="shadow-sm px-4 bg-secondary border border-gray-500 text-white placeholder:text-gray-700 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
           placeholder={placeholder}
           onChange={onChange}
+          required={required}
         />
       </div>
     </>

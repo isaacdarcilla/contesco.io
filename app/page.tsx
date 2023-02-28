@@ -3,12 +3,52 @@
 import Button from "@/components/button/Button";
 import TextInput from "@/components/input/TextInput";
 import { Lora } from "next/font/google";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { Hash, Info } from "react-feather";
 
 const lora = Lora();
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/home");
+    }
+  });
+
+  const handleLogin = async () => {
+    setLoading(true);
+
+    const res = await signIn("email", {
+      email,
+      redirect: false,
+    });
+
+    if (res?.error == "EmailSignin") {
+      toast.error("Email not found.", { duration: 8000 });
+    }
+
+    if (res?.ok && res?.error == null) {
+      setEmail("");
+      toast.success("We've sent a magic link to your email.", {
+        duration: 8000,
+      });
+    }
+
+    setLoading(false);
+  };
+
   return (
     <main className={lora.className}>
+      <Toaster position="bottom-right" />
       <section className="block">
         <div className="g-0 lg:flex lg:flex-wrap">
           <div className="md:px-0 lg:w-5/12">
@@ -25,33 +65,34 @@ export default function LoginPage() {
                     Sign in to your account
                   </p>
                 </div>
-                <form className="mt-8 space-y-6">
+                <form
+                  className="mt-8 space-y-6"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
+                >
                   <input type="hidden" name="remember" value="true" />
                   <div className="-space-y-px rounded-md shadow-sm">
                     <TextInput
                       label="Email"
                       type="email"
                       placeholder="you@example.com"
-                      onChange={() => {}}
-                    />
-                    <TextInput
-                      label="Password"
-                      type="password"
-                      placeholder="Your password"
-                      onChange={() => {}}
+                      required={false}
+                      onChange={(e) => setEmail(e.target.value.toLowerCase())}
                     />
                   </div>
 
-                  <Button title="Sign In" onClick={() => {}} />
+                  <Button
+                    disabled={loading}
+                    type="submit"
+                    title="Sign in with email address"
+                    onClick={() => handleLogin()}
+                  />
 
-                  <div className="text-center text-sm font-medium text-gray-500">
-                    Don't have an account?&nbsp;
-                    <a
-                      href="#"
-                      className="underline text-white hover:text-gray-300"
-                    >
-                      Sign Up Now
-                    </a>
+                  <div className="text-xs group relative text-white flex w-full justify-center rounded-md border border-transparent">
+                    <Hash size={14} />
+                    &nbsp;We'll email you a magic link for a password-free
+                    sign-in.
                   </div>
 
                   <div className="text-center text-xs font-medium text-gray-500">
