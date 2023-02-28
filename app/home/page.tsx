@@ -4,7 +4,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import NavBar from "@/components/navbar/NavBar";
 import { Lora } from "next/font/google";
 
-const lora = Lora({ subsets: ["latin"] });
+const lora = Lora();
 
 export default function HomePage() {
   return (
