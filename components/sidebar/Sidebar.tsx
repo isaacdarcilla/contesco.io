@@ -1,13 +1,20 @@
 "use client";
 
 import { Tooltip } from "flowbite-react";
-import Link from "next/link";
 import { LogOut } from "react-feather";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Sidebar({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status == "unauthenticated") {
+      router.push("/");
+    }
+  });
 
   const handleLogout = async () => {
     await signOut({ redirect: false });

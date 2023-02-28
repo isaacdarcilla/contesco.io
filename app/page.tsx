@@ -7,7 +7,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Hash, Info } from "react-feather";
+import { Info } from "react-feather";
 
 const lora = Lora();
 
@@ -33,13 +33,13 @@ export default function LoginPage() {
     });
 
     if (res?.error == "EmailSignin") {
-      toast.error("Email not found.", { duration: 8000 });
+      toast.error("Please try again.", { duration: 5000 });
     }
 
     if (res?.ok && res?.error == null) {
       setEmail("");
       toast.success("We've sent a magic link to your email.", {
-        duration: 8000,
+        duration: 5000,
       });
     }
 
@@ -48,7 +48,7 @@ export default function LoginPage() {
 
   return (
     <main className={lora.className}>
-      <Toaster position="bottom-right" />
+      <Toaster position="top-right" />
       <section className="block">
         <div className="g-0 lg:flex lg:flex-wrap">
           <div className="md:px-0 lg:w-5/12">
@@ -90,7 +90,7 @@ export default function LoginPage() {
                   />
 
                   <div className="text-xs group relative text-white flex w-full justify-center rounded-md border border-transparent">
-                    <Hash size={14} />
+                    <Info size={14} />
                     &nbsp;We'll email you a magic link for a password-free
                     sign-in.
                   </div>
