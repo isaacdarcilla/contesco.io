@@ -1,13 +1,7 @@
-import "./globals.css";
+"use client";
 
-export const metadata = {
-  title: {
-    default: "Contesco — Streamline your contests.",
-    template: "Contesco — Streamline your contests.",
-  },
-  description:
-    "Streamline your contests with Contesco, the hassle-free solution for modern organizers.",
-};
+import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
   children,
@@ -17,7 +11,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body>{children}</body>
+      <SessionProvider>
+        <body>{children}</body>
+      </SessionProvider>
     </html>
   );
 }
