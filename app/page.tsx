@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Info } from "react-feather";
+import Image from "next/image";
 
 const lora = Lora();
 
@@ -56,6 +57,12 @@ export default function LoginPage() {
               <div className="w-full max-w-md space-y-8">
                 <div>
                   <h3 className="font-bold text-xl tracking-tight text-white">
+                    <Image
+                      src="/logo_96px.png"
+                      alt="Logo"
+                      width={40}
+                      height={40}
+                    />{" "}
                     contesco
                   </h3>
                   <h2 className="mt-6 text-3xl font-bold tracking-tight text-white">
