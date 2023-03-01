@@ -3,11 +3,10 @@ import { Home, Settings } from "react-feather";
 import Sidebar from "@/components/sidebar/Sidebar";
 import NavBar from "@/components/navbar/NavBar";
 import { Lora } from "next/font/google";
-import HomeComponent from "@/components/page/HomeComponent";
 
 const lora = Lora();
 
-export default function HomePage() {
+export default function EventPage() {
   return (
     <main className={lora.className}>
       <div className="bg-primary h-screen w-full flex overflow-hidden">
@@ -17,9 +16,7 @@ export default function HomePage() {
           </SidebarButton>
         </Sidebar>
 
-        <NavBar>
-          <HomeComponent />
-        </NavBar>
+        <NavBar></NavBar>
       </div>
     </main>
   );

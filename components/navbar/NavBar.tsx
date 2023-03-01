@@ -3,11 +3,11 @@
 import { Button } from "flowbite-react";
 import { Bell, MessageCircle } from "react-feather";
 
-export default function NavBar() {
+export default function NavBar({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="w-full h-full flex flex-col justify-between">
-        <header className="h-11 w-full flex items-center relative justify-between bg-secondary">
+      <div className="w-full h-full flex flex-col container">
+        <nav className="h-12 w-full flex items-center relative justify-between bg-secondary">
           <div className="flex flex-col items-start text-white text-xs mx-3">
             Contesco
           </div>
@@ -28,7 +28,8 @@ export default function NavBar() {
               &nbsp;
             </Button>
           </div>
-        </header>
+        </nav>
+        <section className="container">{children}</section>
       </div>
     </>
   );

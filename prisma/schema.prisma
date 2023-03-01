@@ -45,6 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  events        Event[]
 
   @@map("users")
 }
@@ -56,4 +57,24 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  name        String?
+  description String?
+  organizer   String?
+  type        String?
+  category    String?
+  tags        String?
+  banner      String?
+  slug        String?   @unique
+  eventStarts DateTime? @map("event_start")
+  eventEnds   DateTime? @map("event_end")
+  createdAt   DateTime? @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("events")
 }
