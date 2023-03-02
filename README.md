@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/isaacdarcilla/contesco-ui/blob/main/public/logo_96px.png" width="200"></p>
+<p align="center"><img src="https://github.com/isaacdarcilla/contesco-ui/blob/main/public/logo_96px.png" width="100"></p>
 
 ## **Contesco**
 
