@@ -15,9 +15,6 @@ export const authOptions = {
       },
     }),
   ],
-  theme: {
-    colorScheme: "light",
-  },
 };
 
 export default NextAuth(authOptions);

@@ -31,7 +31,7 @@ export default function LoginPage() {
     setLoading(true);
 
     const res = await signIn("email", {
-      email,
+      email: email,
       redirect: false,
     });
 

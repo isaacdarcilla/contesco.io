@@ -22,7 +22,7 @@ export default function RootLayout({
         <body className={montserrat.className}>
           <main className="bg-primary h-screen w-full flex overflow-hidden tracking-tight">
             <Sidebar>
-              <SidebarButton content="Home" link="/home">
+              <SidebarButton content="Home" link="/dashboard/home">
                 <Home size={18} />
               </SidebarButton>
             </Sidebar>

@@ -23,7 +23,7 @@ export default function HomePage() {
             </p>
             <div className="mb-3">
               <Link
-                href="/event/create"
+                href="/dashboard/event/create"
                 className="text-gray-200 text-xs p-1 font-bold bg-green-600 border-white border-1 hover:bg-green-700 rounded-md px-3"
               >
                 New event

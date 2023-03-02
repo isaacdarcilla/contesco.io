@@ -24,7 +24,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
           <div className="flex flex-col items-start text-white text-xs mx-3">
             <div className="flex font-bold">
               Contesco <span className="mx-2 text-gray-500 capitalize">/</span>{" "}
-              {capitalize(pathName?.replace(/\//g, " ").split(" ")[1])}
+              {capitalize(pathName?.replace(/\//g, " ").split(" ")[2])}
             </div>
           </div>
           <div className="flex flex-shrink-0 items-center space-x-4 mx-3">
