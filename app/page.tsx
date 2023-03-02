@@ -2,15 +2,17 @@
 
 import Button from "@/components/button/Button";
 import TextInput from "@/components/input/TextInput";
-import { Lora } from "next/font/google";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Info } from "react-feather";
+import { Info, Mail } from "react-feather";
 import Image from "next/image";
+import { Montserrat } from "next/font/google";
+import CustomToast from "@/components/toast/CustomToast";
+import Link from "next/link";
 
-const lora = Lora();
+const montserrat = Montserrat();
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,11 +23,11 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/home");
+      router.push("/dashboard/home");
     }
   });
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: { target: { reset: () => void } }) => {
     setLoading(true);
 
     const res = await signIn("email", {
@@ -34,13 +36,13 @@ export default function LoginPage() {
     });
 
     if (res?.error == "EmailSignin") {
-      toast.error("Please try again.", { duration: 5000 });
+      toast.error("Please try again", { duration: 10000 });
     }
 
     if (res?.ok && res?.error == null) {
       setEmail("");
-      toast.success("We've sent a magic link to your email.", {
-        duration: 5000,
+      toast.success("We've sent a magic link to your email", {
+        duration: 10000,
       });
     }
 
@@ -48,8 +50,8 @@ export default function LoginPage() {
   };
 
   return (
-    <main className={lora.className}>
-      <Toaster position="top-right" />
+    <main className={montserrat.className}>
+      <CustomToast />
       <section className="block">
         <div className="g-0 lg:flex lg:flex-wrap">
           <div className="md:px-0 lg:w-5/12">
@@ -60,8 +62,8 @@ export default function LoginPage() {
                     <Image
                       src="/logo_96px.png"
                       alt="Logo"
-                      width={40}
-                      height={40}
+                      width={45}
+                      height={45}
                     />{" "}
                     contesco
                   </h3>
@@ -83,6 +85,7 @@ export default function LoginPage() {
                     <TextInput
                       label="Email"
                       type="email"
+                      value={email}
                       placeholder="you@example.com"
                       required={false}
                       onChange={(e) => setEmail(e.target.value.toLowerCase())}
@@ -93,13 +96,15 @@ export default function LoginPage() {
                     disabled={loading}
                     type="submit"
                     title="Sign in with email address"
-                    onClick={() => handleLogin()}
+                    onClick={(e) => handleLogin(e)}
                   />
 
-                  <div className="text-xs group relative text-white flex w-full justify-center rounded-md border border-transparent">
-                    <Info size={14} />
-                    &nbsp;We'll email you a magic link for a password-free
-                    sign-in.
+                  <div className="text-xs text-center group relative text-white flex w-full justify-center rounded-md border border-transparent">
+                    <Mail size={14} />
+                    <p>
+                      &nbsp;We will email you a magic link for a password-free
+                      sign-in.
+                    </p>
                   </div>
 
                   <div className="text-center text-xs font-medium text-gray-500">
@@ -112,10 +117,27 @@ export default function LoginPage() {
             </div>
           </div>
           <div className="flex items-center lg:w-7/12 bg-primary">
-            <div className="w-full max-w-md space-y-8 mx-auto">
-              <div className="text-white text-3xl hidden lg:block">
+            <div className="w-full max-w-lg space-y-8 mx-auto">
+              <div className="text-white text-3xl font-normal hidden lg:block">
                 Streamline your contests with Contesco — the hassle-free
                 solution for modern organizers.
+              </div>
+              <div className="text-white font-bold hidden lg:block">
+                <div className="flex">
+                  <Image
+                    src="/logo_96px.png"
+                    alt="Logo"
+                    width={30}
+                    height={30}
+                  />{" "}
+                  <Link
+                    href="https://twitter.com/contesco.io"
+                    target="_blank"
+                    className="mx-1 my-auto"
+                  >
+                    @contesco.io
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

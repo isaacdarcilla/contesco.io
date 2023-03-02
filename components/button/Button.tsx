@@ -9,7 +9,7 @@ export default function Button({
   title: string;
   type: "button" | "submit" | "reset";
   disabled?: boolean;
-  onClick: () => void;
+  onClick: (e?: any) => void;
 }) {
   return (
     <>
