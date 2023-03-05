@@ -80,7 +80,6 @@ export default function LoginPage() {
                     e.preventDefault();
                   }}
                 >
-                  <input type="hidden" name="remember" value="true" />
                   <div className="-space-y-px rounded-md shadow-sm">
                     <TextInput
                       label="Email"

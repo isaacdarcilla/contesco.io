@@ -19,7 +19,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="w-full h-full flex flex-col container">
+      <div className="h-full flex flex-col w-screen overflow-hidden">
         <nav className="h-12 w-full flex items-center relative justify-between bg-secondary">
           <div className="flex flex-col items-start text-white text-xs mx-3">
             <div className="flex font-bold">

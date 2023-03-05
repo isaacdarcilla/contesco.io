@@ -6,9 +6,9 @@ export default function HomePage() {
     <main>
       <div className="w-full h-full flex flex-col container">
         <section className="container p-6">
-          <div className="w-full p-4 text-center bg-secondary rounded-md sm:p-8">
+          <div className="w-full lg:w-8/12 lg:mx-auto p-4 text-center bg-secondary rounded-md sm:p-8">
             <Image
-              src="/assets/applause_96px.png"
+              src="/assets/check_all_96px.png"
               alt="Logo"
               width={40}
               height={40}
@@ -24,7 +24,7 @@ export default function HomePage() {
             <div className="mb-3">
               <Link
                 href="/dashboard/event/create"
-                className="text-gray-200 text-xs p-1 font-bold bg-green-600 border-white border-1 hover:bg-green-700 rounded-md px-3"
+                className="text-gray-200 text-xs p-1 font-semibold bg-green-600 border-white border-1 hover:bg-green-700 rounded-md px-3"
               >
                 New event
               </Link>
