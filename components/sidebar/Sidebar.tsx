@@ -11,11 +11,11 @@ export default function Sidebar({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
   const { status } = useSession();
 
-  // useEffect(() => {
-  //   if (status == "unauthenticated") {
-  //     router.push("/");
-  //   }
-  // });
+  useEffect(() => {
+    if (status == "unauthenticated") {
+      router.push("/");
+    }
+  });
 
   const handleLogout = async () => {
     await signOut({ redirect: false });

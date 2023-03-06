@@ -22,7 +22,7 @@ export default function TextInput({
         <input
           type={type}
           value={value}
-          className="shadow-sm px-4 bg-secondary border border-gray-500 text-white placeholder:text-gray-500 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+          className="shadow-sm px-4 bg-secondary border border-gray-500 text-white placeholder:text-gray-500 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
           placeholder={placeholder}
           onChange={onChange}
           required={required}

@@ -43,6 +43,8 @@ model User {
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
+  createdAt     DateTime? @default(now()) @map("created_at")
+  updatedAt     DateTime? @default(now()) @map("updated_at")
   accounts      Account[]
   sessions      Session[]
   events        Event[]
@@ -62,17 +64,18 @@ model VerificationToken {
 model Event {
   id          String    @id @default(cuid())
   userId      String    @map("user_id")
-  name        String?
-  description String?
-  organizer   String?
-  type        String?
-  category    String?
+  name        String
+  description String
+  organizer   String
+  type        String
+  category    String
   tags        String?
-  banner      String?
-  slug        String?   @unique
+  banner      String
+  slug        String    @unique
   eventStarts DateTime? @map("event_start")
   eventEnds   DateTime? @map("event_end")
-  createdAt   DateTime? @map("created_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedAt   DateTime? @default(now()) @map("updated_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
