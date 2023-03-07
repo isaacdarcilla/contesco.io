@@ -2,6 +2,7 @@
 
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export default function RootLayout({
   children,
@@ -12,7 +13,9 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <SessionProvider>
-        <body>{children}</body>
+        <body>
+          <ChakraProvider>{children}</ChakraProvider>
+        </body>
       </SessionProvider>
     </html>
   );

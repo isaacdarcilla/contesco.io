@@ -16,20 +16,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head />
-      <SessionProvider>
-        <body className={montserrat.className}>
-          <main className="bg-primary h-screen w-full flex overflow-hidden tracking-tight">
-            <Sidebar>
-              <SidebarButton content="Home" link="/dashboard/home">
-                <Home size={18} />
-              </SidebarButton>
-            </Sidebar>
-            <NavBar>{children}</NavBar>
-          </main>
-        </body>
-      </SessionProvider>
-    </html>
+    <SessionProvider>
+      <main className={montserrat.className}>
+        <div className="bg-primary h-screen w-full flex overflow-hidden tracking-tight">
+          <Sidebar>
+            <SidebarButton content="Home" link="/dashboard/home">
+              <Home size={18} />
+            </SidebarButton>
+          </Sidebar>
+          <NavBar>{children}</NavBar>
+        </div>
+      </main>
+    </SessionProvider>
   );
 }

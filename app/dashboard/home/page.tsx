@@ -1,7 +1,16 @@
-import Link from "next/link";
+"use client";
+
 import Image from "next/image";
+import { Button } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
+  const router = useRouter();
+
+  const handleClick = async () => {
+    router.push("/dashboard/event/create");
+  };
+
   return (
     <main>
       <div className="w-full h-full flex flex-col container">
@@ -22,12 +31,13 @@ export default function HomePage() {
               organizers.
             </p>
             <div className="mb-3">
-              <Link
-                href="/dashboard/event/create"
-                className="text-gray-200 text-xs p-1 font-semibold bg-green-600 border-white border-1 hover:bg-green-700 rounded-md px-3"
+              <Button
+                size="sm"
+                colorScheme="green"
+                onClick={() => handleClick()}
               >
                 New event
-              </Link>
+              </Button>
             </div>
           </div>
         </section>

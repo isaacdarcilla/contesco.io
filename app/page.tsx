@@ -1,12 +1,11 @@
 "use client";
 
-import Button from "@/components/button/Button";
-import TextInput from "@/components/input/TextInput";
+import { Button, Input, Stack } from "@chakra-ui/react";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Info, Mail } from "react-feather";
+import { Mail } from "react-feather";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import CustomToast from "@/components/toast/CustomToast";
@@ -27,7 +26,7 @@ export default function LoginPage() {
     }
   });
 
-  const handleLogin = async (e: { target: { reset: () => void } }) => {
+  const handleLogin = async () => {
     setLoading(true);
 
     const res = await signIn("email", {
@@ -81,22 +80,30 @@ export default function LoginPage() {
                   }}
                 >
                   <div className="-space-y-px rounded-md shadow-sm">
-                    <TextInput
-                      label="Email"
-                      type="email"
-                      value={email}
-                      placeholder="you@example.com"
-                      required={false}
-                      onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                    />
-                  </div>
+                    <Stack spacing={3}>
+                      <Input
+                        value={email}
+                        type="email"
+                        size="sm"
+                        focusBorderColor="blue.400"
+                        variant="filled"
+                        rounded="md"
+                        placeholder="you@example.com"
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                      />
 
-                  <Button
-                    disabled={loading}
-                    type="submit"
-                    title="Sign in with email address"
-                    onClick={(e) => handleLogin(e)}
-                  />
+                      <Button
+                        colorScheme="blue"
+                        size="sm"
+                        isLoading={loading}
+                        onClick={() => {
+                          handleLogin();
+                        }}
+                      >
+                        Signin with your email
+                      </Button>
+                    </Stack>
+                  </div>
 
                   <div className="text-xs text-center group relative text-white flex w-full justify-center rounded-md border border-transparent">
                     <Mail size={14} />
