@@ -2,6 +2,7 @@
 
 import {
   Button,
+  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -9,7 +10,14 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  FormControl,
+  FormHelperText,
+  FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
+  Text,
+  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -34,22 +42,92 @@ export default function CreateEventDrawer({}) {
               for all event related process.
             </p>
             <div className="space-y-3">
-              <Input
-                placeholder="Event name"
-                size="sm"
-                focusBorderColor="blue.400"
-                variant="filled"
-                autoFocus={true}
-                rounded="md"
-              />
+              <FormControl>
+                <Input
+                  placeholder="Event name"
+                  size="md"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  autoFocus={true}
+                  rounded="md"
+                />
+              </FormControl>
 
-              <Input
-                placeholder="Organizer name"
-                size="sm"
-                focusBorderColor="blue.400"
-                variant="filled"
-                rounded="md"
-              />
+              <FormControl>
+                <Input
+                  placeholder="Organizer name"
+                  size="md"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="md"
+                />
+              </FormControl>
+
+              <FormControl>
+                <Input
+                  placeholder="Category"
+                  size="md"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="md"
+                />
+              </FormControl>
+
+              <Divider />
+
+              <FormControl>
+                <FormLabel size="xs">Event Start Date</FormLabel>
+                <Input
+                  type="datetime-local"
+                  size="md"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="md"
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel size="xs">Event End Date</FormLabel>
+                <Input
+                  type="datetime-local"
+                  size="md"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="md"
+                />
+              </FormControl>
+
+              <Divider />
+
+              <FormControl>
+                <Textarea
+                  placeholder="Write event description..."
+                  size="md"
+                  resize="vertical"
+                  rounded="md"
+                  variant="filled"
+                />
+              </FormControl>
+
+              <Text fontSize="md">Event URL</Text>
+              <InputGroup size="md">
+                <Input
+                  disabled={true}
+                  placeholder="Event URL"
+                  rounded="md"
+                  variant="filled"
+                />
+                <InputRightElement width="4.5rem" borderRadius="16px">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={() => {}}
+                    borderRadius="md"
+                  >
+                    Copy
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
             </div>
           </DrawerBody>
 

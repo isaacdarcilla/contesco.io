@@ -8,10 +8,10 @@ export default function HomePage() {
         <section className="container p-6">
           <div className="w-full lg:w-8/12 lg:mx-auto p-4 text-center bg-secondary rounded-md sm:p-8">
             <Image
-              src="/assets/save_close_96px.png"
+              src="/assets/check_all_96px.png"
               alt="Logo"
-              width={40}
-              height={40}
+              width={50}
+              height={50}
               className="mx-auto text-center my-3"
             />
             <h5 className="mb-2 text-xl font-bold text-white">
