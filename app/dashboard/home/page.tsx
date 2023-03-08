@@ -1,23 +1,14 @@
-"use client";
-
 import Image from "next/image";
-import { Button } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import CreateEventDrawer from "@/components/drawer/CreateEventDrawer";
 
 export default function HomePage() {
-  const router = useRouter();
-
-  const handleClick = async () => {
-    router.push("/dashboard/event/create");
-  };
-
   return (
     <main>
       <div className="w-full h-full flex flex-col container">
         <section className="container p-6">
           <div className="w-full lg:w-8/12 lg:mx-auto p-4 text-center bg-secondary rounded-md sm:p-8">
             <Image
-              src="/assets/check_all_96px.png"
+              src="/assets/save_close_96px.png"
               alt="Logo"
               width={40}
               height={40}
@@ -31,13 +22,7 @@ export default function HomePage() {
               organizers.
             </p>
             <div className="mb-3">
-              <Button
-                size="sm"
-                colorScheme="green"
-                onClick={() => handleClick()}
-              >
-                New event
-              </Button>
+              <CreateEventDrawer />
             </div>
           </div>
         </section>
