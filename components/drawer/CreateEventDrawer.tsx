@@ -11,57 +11,59 @@ import {
   DrawerHeader,
   DrawerOverlay,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   InputGroup,
   InputLeftAddon,
   InputRightElement,
+  Kbd,
   Text,
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
-import { create } from "zustand";
-import { init } from "@paralleldrive/cuid2";
-import { EventState } from "@/lib/event.type";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-const createId = init({
-  length: 10,
+const EventSchema = z.object({
+  eventName: z
+    .string()
+    .min(1, "Field is required.")
+    .max(25, "Field must contain at most 25 characters."),
+  organizerName: z
+    .string()
+    .min(1, "Field is required.")
+    .max(25, "Field must contain at most 25 characters."),
+  categoryName: z
+    .string()
+    .min(1, "Field is required.")
+    .max(25, "Field must contain at most 25 characters."),
+  eventStartDate: z.string().min(1, "Field is required."),
+  eventEndDate: z.string().min(1, "Field is required."),
+  eventDescription: z
+    .string()
+    .min(12, "Field must contain at least 12 characters.")
+    .max(144, "Field must contain at most 144 characters."),
 });
 
-const useStore = create<EventState>((set) => ({
-  eventName: "",
-  organizerName: "",
-  categoryName: "",
-  eventStartDate: "",
-  eventEndDate: "",
-  eventDescription: "",
-  eventSlug: "",
-  setEventName: (e: string) =>
-    set(() => ({ eventName: e, eventSlug: createId() })),
-  setOrganizerName: (e: string) => set(() => ({ organizerName: e })),
-  setCategoryName: (e: string) => set(() => ({ categoryName: e })),
-  setEventStartDate: (e: string) => set(() => ({ eventStartDate: e })),
-  setEventEndDate: (e: string) => set(() => ({ eventEndDate: e })),
-  setEventDescription: (e: string) => set(() => ({ eventDescription: e })),
-}));
+type EventData = z.infer<typeof EventSchema>;
 
 export default function CreateEventDrawer({}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
-    eventName,
-    eventSlug,
-    organizerName,
-    categoryName,
-    eventStartDate,
-    eventEndDate,
-    eventDescription,
-    setEventName,
-    setOrganizerName,
-    setCategoryName,
-    setEventStartDate,
-    setEventEndDate,
-    setEventDescription,
-  } = useStore();
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<EventData>({
+    resolver: zodResolver(EventSchema),
+  });
+
+  const onSubmit: SubmitHandler<EventData> = (data: EventData) =>
+    console.log(data);
+
+  console.log(watch("eventStartDate"));
 
   return (
     <>
@@ -69,130 +71,153 @@ export default function CreateEventDrawer({}) {
         New event
       </Button>
 
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
+      <Drawer
+        onEsc={onClose}
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        size="sm"
+      >
         <DrawerOverlay />
-        <DrawerContent bgColor="#232323">
+        <DrawerContent overflowY="scroll" bgColor="#232323">
           <DrawerCloseButton />
-          <DrawerHeader fontSize="md">Create new event</DrawerHeader>
-
-          <DrawerBody>
-            <p className="text-gray-400 text-xs text-left mb-5">
-              Your event or contest will have a dedicated URL which will be used
-              for all event related process.
-            </p>
-            <div className="space-y-3">
-              <FormControl>
-                <Input
-                  placeholder="Event name"
-                  size="md"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  autoFocus={true}
-                  rounded="md"
-                  value={eventName}
-                  onChange={(e) => setEventName(e.target.value)}
-                />
-              </FormControl>
-
-              <FormControl>
-                <Input
-                  placeholder="Organizer name"
-                  size="md"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  rounded="md"
-                  value={organizerName}
-                  onChange={(e) => setOrganizerName(e.target.value)}
-                />
-              </FormControl>
-
-              <FormControl>
-                <Input
-                  placeholder="Category e.g. Singing, Dancing"
-                  size="md"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  rounded="md"
-                  value={categoryName}
-                  onChange={(e) => setCategoryName(e.target.value)}
-                />
-              </FormControl>
-
-              <Divider />
-
-              <FormControl>
-                <FormLabel size="xs">Event Start Date</FormLabel>
-                <Input
-                  type="datetime-local"
-                  size="md"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  rounded="md"
-                  value={eventStartDate}
-                  onChange={(e) => setEventStartDate(e.target.value)}
-                />
-              </FormControl>
-
-              <FormControl>
-                <FormLabel size="xs">Event End Date</FormLabel>
-                <Input
-                  type="datetime-local"
-                  size="md"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  rounded="md"
-                  value={eventEndDate}
-                  onChange={(e) => setEventEndDate(e.target.value)}
-                />
-              </FormControl>
-
-              <Divider />
-
-              <FormControl>
-                <Textarea
-                  placeholder="Write event description..."
-                  size="md"
-                  resize="vertical"
-                  rounded="md"
-                  variant="filled"
-                  value={eventDescription}
-                  onChange={(e) => setEventDescription(e.target.value)}
-                />
-              </FormControl>
-
-              <Text fontSize="md">Event URL</Text>
-
-              <InputGroup size="md">
-                <InputLeftAddon children="contesco.io/" />
-                <Input
-                  disabled={true}
-                  placeholder="Event URL"
-                  rounded="md"
-                  variant="filled"
-                  value={eventSlug}
-                />
-                <InputRightElement width="4.5rem" borderRadius="16px">
-                  <Button
-                    h="1.75rem"
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <DrawerHeader fontSize="md">Create new event</DrawerHeader>
+            <DrawerBody>
+              <p className="text-gray-400 text-xs text-left mb-5">
+                Your event or contest will have a dedicated URL which will be
+                used for all event related process.
+              </p>
+              <p className="hidden lg:block text-gray-400 text-xs text-left mb-5">
+                Press <Kbd>Esc</Kbd> key to close the form.
+              </p>
+              <div className="space-y-3">
+                <FormControl isInvalid={errors.eventName != null}>
+                  <Input
+                    placeholder="Event name"
                     size="sm"
-                    onClick={() => {}}
-                    borderRadius="md"
+                    focusBorderColor="blue.400"
+                    variant="filled"
+                    autoFocus={true}
+                    rounded="md"
+                    {...register("eventName")}
+                  />
+                  <FormHelperText
+                    marginTop="1"
+                    fontSize="small"
+                    textColor="red.400"
                   >
-                    Copy
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </div>
-          </DrawerBody>
+                    {errors.eventName?.message}
+                  </FormHelperText>
+                </FormControl>
 
-          <DrawerFooter>
-            <Button variant="outline" mr={3} size="sm" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue" size="sm">
-              Create
-            </Button>
-          </DrawerFooter>
+                <FormControl isInvalid={errors.organizerName != null}>
+                  <Input
+                    placeholder="Organizer name"
+                    size="sm"
+                    focusBorderColor="blue.400"
+                    variant="filled"
+                    rounded="md"
+                    {...register("organizerName")}
+                  />
+                  <FormHelperText
+                    marginTop="1"
+                    fontSize="small"
+                    textColor="red.500"
+                  >
+                    {errors.organizerName?.message}
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl isInvalid={errors.categoryName != null}>
+                  <Input
+                    placeholder="Category e.g. Singing, Dancing"
+                    size="sm"
+                    focusBorderColor="blue.400"
+                    variant="filled"
+                    rounded="md"
+                    {...register("categoryName")}
+                  />
+                  <FormHelperText
+                    marginTop="1"
+                    fontSize="small"
+                    textColor="red.500"
+                  >
+                    {errors.categoryName?.message}
+                  </FormHelperText>
+                </FormControl>
+
+                <Divider />
+
+                <FormControl isInvalid={errors.eventStartDate != null}>
+                  <FormLabel size="xs">Event Start Date</FormLabel>
+                  <Input
+                    type="datetime-local"
+                    size="sm"
+                    focusBorderColor="blue.400"
+                    variant="filled"
+                    rounded="md"
+                    {...register("eventStartDate")}
+                  />
+                  <FormHelperText
+                    marginTop="1"
+                    fontSize="small"
+                    textColor="red.500"
+                  >
+                    {errors.eventStartDate?.message}
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl isInvalid={errors.eventEndDate != null}>
+                  <FormLabel size="xs">Event End Date</FormLabel>
+                  <Input
+                    type="datetime-local"
+                    size="sm"
+                    focusBorderColor="blue.400"
+                    variant="filled"
+                    rounded="md"
+                    {...register("eventEndDate")}
+                  />
+                  <FormHelperText
+                    marginTop="1"
+                    fontSize="small"
+                    textColor="red.500"
+                  >
+                    {errors.eventEndDate?.message}
+                  </FormHelperText>
+                </FormControl>
+
+                <Divider />
+
+                <FormControl isInvalid={errors.eventDescription != null}>
+                  <Textarea
+                    placeholder="Write event description..."
+                    size="sm"
+                    resize="vertical"
+                    rounded="md"
+                    variant="filled"
+                    {...register("eventDescription")}
+                  />
+                  <FormHelperText
+                    marginTop="1"
+                    fontSize="small"
+                    textColor="red.500"
+                  >
+                    {errors.eventDescription?.message}
+                  </FormHelperText>
+                </FormControl>
+              </div>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button variant="outline" mr={3} size="sm" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme="blue" size="sm" type="submit">
+                Create
+              </Button>
+            </DrawerFooter>
+          </form>
         </DrawerContent>
       </Drawer>
     </>
