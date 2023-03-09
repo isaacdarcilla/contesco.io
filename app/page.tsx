@@ -22,7 +22,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/dashboard/home");
+      router.push("/dashboard");
     }
   });
 

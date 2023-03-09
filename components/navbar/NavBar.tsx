@@ -7,24 +7,11 @@ import { Bell, MessageCircle } from "react-feather";
 export default function NavBar({ children }: { children: React.ReactNode }) {
   const pathName = usePathname();
 
-  const capitalize = (str: string | undefined) => {
-    if (typeof str === "string") {
-      return str.replace(/\b\w/g, function (l) {
-        return l.toUpperCase();
-      });
-    }
-
-    return "";
-  };
-
   return (
     <div className="h-full flex flex-col w-screen overflow-hidden">
       <nav className="h-12 w-full flex items-center relative justify-between bg-secondary">
         <div className="flex flex-col items-start text-white text-xs mx-3">
-          <div className="flex font-bold">
-            Contesco <span className="mx-2 text-gray-500 capitalize">/</span>{" "}
-            {capitalize(pathName?.replace(/\//g, " ").split(" ")[2])}
-          </div>
+          <div className="flex font-bold">Contesco</div>
         </div>
         <div className="flex flex-shrink-0 items-center space-x-4 mx-3">
           <Button

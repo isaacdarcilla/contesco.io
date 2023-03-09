@@ -15,14 +15,55 @@ import {
   FormLabel,
   Input,
   InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
   InputRightElement,
   Text,
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
+import { create } from "zustand";
+import { init } from "@paralleldrive/cuid2";
+import { EventState } from "@/lib/event.type";
+
+const createId = init({
+  length: 10,
+});
+
+const useStore = create<EventState>((set) => ({
+  eventName: "",
+  organizerName: "",
+  categoryName: "",
+  eventStartDate: "",
+  eventEndDate: "",
+  eventDescription: "",
+  eventSlug: "",
+  setEventName: (e: string) =>
+    set(() => ({ eventName: e, eventSlug: createId() })),
+  setOrganizerName: (e: string) => set(() => ({ organizerName: e })),
+  setCategoryName: (e: string) => set(() => ({ categoryName: e })),
+  setEventStartDate: (e: string) => set(() => ({ eventStartDate: e })),
+  setEventEndDate: (e: string) => set(() => ({ eventEndDate: e })),
+  setEventDescription: (e: string) => set(() => ({ eventDescription: e })),
+}));
 
 export default function CreateEventDrawer({}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    eventName,
+    eventSlug,
+    organizerName,
+    categoryName,
+    eventStartDate,
+    eventEndDate,
+    eventDescription,
+    setEventName,
+    setOrganizerName,
+    setCategoryName,
+    setEventStartDate,
+    setEventEndDate,
+    setEventDescription,
+  } = useStore();
 
   return (
     <>
@@ -32,7 +73,7 @@ export default function CreateEventDrawer({}) {
 
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bgColor="#232323">
           <DrawerCloseButton />
           <DrawerHeader fontSize="md">Create new event</DrawerHeader>
 
@@ -50,6 +91,8 @@ export default function CreateEventDrawer({}) {
                   variant="filled"
                   autoFocus={true}
                   rounded="md"
+                  value={eventName}
+                  onChange={(e) => setEventName(e.target.value)}
                 />
               </FormControl>
 
@@ -60,16 +103,20 @@ export default function CreateEventDrawer({}) {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="md"
+                  value={organizerName}
+                  onChange={(e) => setOrganizerName(e.target.value)}
                 />
               </FormControl>
 
               <FormControl>
                 <Input
-                  placeholder="Category"
+                  placeholder="Category e.g. Singing, Dancing"
                   size="md"
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="md"
+                  value={categoryName}
+                  onChange={(e) => setCategoryName(e.target.value)}
                 />
               </FormControl>
 
@@ -83,6 +130,8 @@ export default function CreateEventDrawer({}) {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="md"
+                  value={eventStartDate}
+                  onChange={(e) => setEventStartDate(e.target.value)}
                 />
               </FormControl>
 
@@ -94,6 +143,8 @@ export default function CreateEventDrawer({}) {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="md"
+                  value={eventEndDate}
+                  onChange={(e) => setEventEndDate(e.target.value)}
                 />
               </FormControl>
 
@@ -106,16 +157,21 @@ export default function CreateEventDrawer({}) {
                   resize="vertical"
                   rounded="md"
                   variant="filled"
+                  value={eventDescription}
+                  onChange={(e) => setEventDescription(e.target.value)}
                 />
               </FormControl>
 
               <Text fontSize="md">Event URL</Text>
+
               <InputGroup size="md">
+                <InputLeftAddon children="contesco.io/" />
                 <Input
                   disabled={true}
                   placeholder="Event URL"
                   rounded="md"
                   variant="filled"
+                  value={eventSlug}
                 />
                 <InputRightElement width="4.5rem" borderRadius="16px">
                   <Button
