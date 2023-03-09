@@ -14,16 +14,12 @@ import {
   FormHelperText,
   FormLabel,
   Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightElement,
   Kbd,
-  Text,
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const EventSchema = z.object({
