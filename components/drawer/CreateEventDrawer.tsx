@@ -22,26 +22,31 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
-const EventSchema = z.object({
-  eventName: z
-    .string()
-    .min(1, "Field is required.")
-    .max(25, "Field must contain at most 25 characters."),
-  organizerName: z
-    .string()
-    .min(1, "Field is required.")
-    .max(25, "Field must contain at most 25 characters."),
-  categoryName: z
-    .string()
-    .min(1, "Field is required.")
-    .max(25, "Field must contain at most 25 characters."),
-  eventStartDate: z.string().min(1, "Field is required."),
-  eventEndDate: z.string().min(1, "Field is required."),
-  eventDescription: z
-    .string()
-    .min(12, "Field must contain at least 12 characters.")
-    .max(144, "Field must contain at most 144 characters."),
-});
+const EventSchema = z
+  .object({
+    eventName: z
+      .string()
+      .min(1, "Field is required.")
+      .max(25, "Field must contain at most 25 characters."),
+    organizerName: z
+      .string()
+      .min(1, "Field is required.")
+      .max(25, "Field must contain at most 25 characters."),
+    categoryName: z
+      .string()
+      .min(1, "Field is required.")
+      .max(25, "Field must contain at most 25 characters."),
+    eventStartDate: z.string().min(1, "Field is required."),
+    eventEndDate: z.string().min(1, "Field is required."),
+    eventDescription: z
+      .string()
+      .min(12, "Field must contain at least 12 characters.")
+      .max(144, "Field must contain at most 144 characters."),
+  })
+  .refine((data) => data.eventStartDate < data.eventEndDate, {
+    message: "Event end date must be after start date.",
+    path: ["eventEndDate"],
+  });
 
 type EventData = z.infer<typeof EventSchema>;
 
@@ -50,7 +55,6 @@ export default function CreateEventDrawer({}) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<EventData>({
     resolver: zodResolver(EventSchema),
@@ -58,8 +62,6 @@ export default function CreateEventDrawer({}) {
 
   const onSubmit: SubmitHandler<EventData> = (data: EventData) =>
     console.log(data);
-
-  console.log(watch("eventStartDate"));
 
   return (
     <>
