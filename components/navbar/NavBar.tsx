@@ -36,7 +36,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
         </div>
       </nav>
       <section className="container">
-        {status !== "loading" ? children : <Skeleton />}
+        {status !== "loading" ? children : <Skeleton center={true} />}
       </section>
     </div>
   );
