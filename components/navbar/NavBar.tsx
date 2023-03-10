@@ -1,11 +1,12 @@
 "use client";
 
 import { Button } from "flowbite-react";
-import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { Bell, MessageCircle } from "react-feather";
+import Skeleton from "../loading/Skeleton";
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
-  const pathName = usePathname();
+  const { status } = useSession();
 
   return (
     <div className="h-full flex flex-col w-screen overflow-hidden">
@@ -34,7 +35,9 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
           </Button>
         </div>
       </nav>
-      <section className="container">{children}</section>
+      <section className="container">
+        {status !== "loading" ? children : <Skeleton />}
+      </section>
     </div>
   );
 }

@@ -60,8 +60,9 @@ export default function CreateEventDrawer({}) {
     resolver: zodResolver(EventSchema),
   });
 
-  const onSubmit: SubmitHandler<EventData> = (data: EventData) =>
+  const onSubmit: SubmitHandler<EventData> = (data: EventData) => {
     console.log(data);
+  };
 
   return (
     <>
