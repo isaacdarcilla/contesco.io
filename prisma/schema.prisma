@@ -40,7 +40,7 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String    @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
   createdAt     DateTime? @default(now()) @map("created_at")
@@ -67,11 +67,11 @@ model Event {
   name        String
   description String
   organizer   String
-  type        String
+  type        String?
   category    String
   tags        String?
-  banner      String
-  slug        String    @unique
+  banner      String?
+  slug        String?   @unique
   eventStarts DateTime? @map("event_start")
   eventEnds   DateTime? @map("event_end")
   createdAt   DateTime? @default(now()) @map("created_at")

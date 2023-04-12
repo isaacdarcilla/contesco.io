@@ -21,6 +21,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 
 const EventSchema = z
@@ -56,15 +57,21 @@ export default function CreateEventDrawer({}) {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<EventData>({
     resolver: zodResolver(EventSchema),
   });
 
-  const onSubmit: SubmitHandler<EventData> = (data: EventData) => {
-    console.log(data);
-    reset();
+  const onSubmit: SubmitHandler<EventData> = async (form: EventData) => {
+    try {
+      await fetch("/api/event/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
