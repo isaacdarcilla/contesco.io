@@ -66,7 +66,7 @@ export default function CreateEventDrawer({}) {
 
   return (
     <>
-      <Button size="sm" colorScheme="blue" onClick={onOpen}>
+      <Button size="xs" colorScheme="green" onClick={onOpen}>
         New event
       </Button>
 
@@ -78,7 +78,7 @@ export default function CreateEventDrawer({}) {
         size="sm"
       >
         <DrawerOverlay />
-        <DrawerContent overflowY="scroll" bgColor="#232323">
+        <DrawerContent overflowY="scroll">
           <DrawerCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
             <DrawerHeader fontSize="md">Create new event</DrawerHeader>

@@ -84,12 +84,15 @@ export default function LoginPage() {
                       <Input
                         value={email}
                         type="email"
+                        className="text-white"
                         size="sm"
                         focusBorderColor="blue.400"
                         variant="filled"
                         rounded="md"
                         placeholder="you@example.com"
-                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                        onChange={(e: any) =>
+                          setEmail(e.target.value.toLowerCase())
+                        }
                       />
 
                       <Button
