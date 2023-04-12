@@ -19,6 +19,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -55,6 +56,7 @@ export default function CreateEventDrawer({}) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<EventData>({
     resolver: zodResolver(EventSchema),
@@ -62,11 +64,18 @@ export default function CreateEventDrawer({}) {
 
   const onSubmit: SubmitHandler<EventData> = (data: EventData) => {
     console.log(data);
+    reset();
   };
 
   return (
     <>
-      <Button size="xs" colorScheme="green" onClick={onOpen}>
+      <Button
+        leftIcon={<Plus size="15" />}
+        size="sm"
+        rounded="sm"
+        colorScheme="green"
+        onClick={onOpen}
+      >
         New event
       </Button>
 
@@ -75,148 +84,159 @@ export default function CreateEventDrawer({}) {
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
-        size="sm"
+        size="md"
       >
         <DrawerOverlay />
         <DrawerContent overflowY="scroll">
           <DrawerCloseButton />
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <DrawerHeader fontSize="md">Create new event</DrawerHeader>
-            <DrawerBody>
-              <p className="text-gray-400 text-xs text-left mb-5">
-                Your event or contest will have a dedicated URL which will be
-                used for all event related process.
-              </p>
-              <p className="hidden lg:block text-gray-400 text-xs text-left mb-5">
-                Press <Kbd>Esc</Kbd> key to close the form.
-              </p>
-              <div className="space-y-3">
-                <FormControl isInvalid={errors.eventName != null}>
-                  <Input
-                    placeholder="Event name"
-                    size="sm"
-                    focusBorderColor="blue.400"
-                    variant="filled"
-                    autoFocus={true}
-                    rounded="md"
-                    {...register("eventName")}
-                  />
-                  <FormHelperText
-                    marginTop="1"
-                    fontSize="small"
-                    textColor="red.400"
-                  >
-                    {errors.eventName?.message}
-                  </FormHelperText>
-                </FormControl>
+          <DrawerHeader fontSize="md">Create new event</DrawerHeader>
+          <DrawerBody overflowY="scroll">
+            <p className="text-gray-400 text-xs text-left mb-5">
+              Your event or contest will have a dedicated URL which will be used
+              for all event related process.
+            </p>
+            <p className="hidden lg:block text-gray-400 text-xs text-left mb-5">
+              Press <Kbd>Esc</Kbd> key to close the form.
+            </p>
+            <div className="space-y-3">
+              <FormControl isInvalid={errors.eventName != null}>
+                <Input
+                  placeholder="Event name"
+                  size="sm"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  autoFocus={true}
+                  rounded="sm"
+                  {...register("eventName")}
+                />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  {errors.eventName?.message}
+                </FormHelperText>
+              </FormControl>
 
-                <FormControl isInvalid={errors.organizerName != null}>
-                  <Input
-                    placeholder="Organizer name"
-                    size="sm"
-                    focusBorderColor="blue.400"
-                    variant="filled"
-                    rounded="md"
-                    {...register("organizerName")}
-                  />
-                  <FormHelperText
-                    marginTop="1"
-                    fontSize="small"
-                    textColor="red.500"
-                  >
-                    {errors.organizerName?.message}
-                  </FormHelperText>
-                </FormControl>
+              <FormControl isInvalid={errors.organizerName != null}>
+                <Input
+                  placeholder="Organizer name"
+                  size="sm"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                  {...register("organizerName")}
+                />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.500"
+                >
+                  {errors.organizerName?.message}
+                </FormHelperText>
+              </FormControl>
 
-                <FormControl isInvalid={errors.categoryName != null}>
-                  <Input
-                    placeholder="Category e.g. Singing, Dancing"
-                    size="sm"
-                    focusBorderColor="blue.400"
-                    variant="filled"
-                    rounded="md"
-                    {...register("categoryName")}
-                  />
-                  <FormHelperText
-                    marginTop="1"
-                    fontSize="small"
-                    textColor="red.500"
-                  >
-                    {errors.categoryName?.message}
-                  </FormHelperText>
-                </FormControl>
+              <FormControl isInvalid={errors.categoryName != null}>
+                <Input
+                  placeholder="Category e.g. Singing, Dancing"
+                  size="sm"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                  {...register("categoryName")}
+                />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.500"
+                >
+                  {errors.categoryName?.message}
+                </FormHelperText>
+              </FormControl>
 
-                <Divider />
+              <Divider />
 
-                <FormControl isInvalid={errors.eventStartDate != null}>
-                  <FormLabel size="xs">Event Start Date</FormLabel>
-                  <Input
-                    type="datetime-local"
-                    size="sm"
-                    focusBorderColor="blue.400"
-                    variant="filled"
-                    rounded="md"
-                    {...register("eventStartDate")}
-                  />
-                  <FormHelperText
-                    marginTop="1"
-                    fontSize="small"
-                    textColor="red.500"
-                  >
-                    {errors.eventStartDate?.message}
-                  </FormHelperText>
-                </FormControl>
+              <FormControl isInvalid={errors.eventStartDate != null}>
+                <FormLabel size="xs">Event Start Date</FormLabel>
+                <Input
+                  type="datetime-local"
+                  size="sm"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                  {...register("eventStartDate")}
+                />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.500"
+                >
+                  {errors.eventStartDate?.message}
+                </FormHelperText>
+              </FormControl>
 
-                <FormControl isInvalid={errors.eventEndDate != null}>
-                  <FormLabel size="xs">Event End Date</FormLabel>
-                  <Input
-                    type="datetime-local"
-                    size="sm"
-                    focusBorderColor="blue.400"
-                    variant="filled"
-                    rounded="md"
-                    {...register("eventEndDate")}
-                  />
-                  <FormHelperText
-                    marginTop="1"
-                    fontSize="small"
-                    textColor="red.500"
-                  >
-                    {errors.eventEndDate?.message}
-                  </FormHelperText>
-                </FormControl>
+              <FormControl isInvalid={errors.eventEndDate != null}>
+                <FormLabel size="xs">Event End Date</FormLabel>
+                <Input
+                  type="datetime-local"
+                  size="sm"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                  {...register("eventEndDate")}
+                />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.500"
+                >
+                  {errors.eventEndDate?.message}
+                </FormHelperText>
+              </FormControl>
 
-                <Divider />
+              <Divider />
 
-                <FormControl isInvalid={errors.eventDescription != null}>
-                  <Textarea
-                    placeholder="Write event description..."
-                    size="sm"
-                    resize="vertical"
-                    rounded="md"
-                    variant="filled"
-                    {...register("eventDescription")}
-                  />
-                  <FormHelperText
-                    marginTop="1"
-                    fontSize="small"
-                    textColor="red.500"
-                  >
-                    {errors.eventDescription?.message}
-                  </FormHelperText>
-                </FormControl>
-              </div>
-            </DrawerBody>
+              <FormControl isInvalid={errors.eventDescription != null}>
+                <Textarea
+                  placeholder="Write event description..."
+                  size="sm"
+                  resize="vertical"
+                  rounded="sm"
+                  variant="filled"
+                  {...register("eventDescription")}
+                />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.500"
+                >
+                  {errors.eventDescription?.message}
+                </FormHelperText>
+              </FormControl>
+            </div>
+          </DrawerBody>
 
-            <DrawerFooter>
-              <Button variant="outline" mr={3} size="sm" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="blue" size="sm" type="submit">
-                Create
-              </Button>
-            </DrawerFooter>
-          </form>
+          <DrawerFooter>
+            <Button
+              variant="outline"
+              textColor="red.500"
+              rounded="sm"
+              mr={3}
+              size="sm"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              leftIcon={<Save size="15" />}
+              colorScheme="green"
+              rounded="sm"
+              size="sm"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Create
+            </Button>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

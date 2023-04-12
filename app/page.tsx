@@ -5,7 +5,6 @@ import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Mail } from "react-feather";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import CustomToast from "@/components/toast/CustomToast";
@@ -79,7 +78,7 @@ export default function LoginPage() {
                     e.preventDefault();
                   }}
                 >
-                  <div className="-space-y-px rounded-md shadow-sm">
+                  <div className="-space-y-px">
                     <Stack spacing={3}>
                       <Input
                         value={email}
@@ -88,7 +87,7 @@ export default function LoginPage() {
                         size="sm"
                         focusBorderColor="blue.400"
                         variant="filled"
-                        rounded="md"
+                        rounded="sm"
                         placeholder="you@example.com"
                         onChange={(e: any) =>
                           setEmail(e.target.value.toLowerCase())
@@ -96,8 +95,9 @@ export default function LoginPage() {
                       />
 
                       <Button
-                        colorScheme="blue"
+                        colorScheme="green"
                         size="sm"
+                        rounded="sm"
                         isLoading={loading}
                         onClick={() => {
                           handleLogin();
@@ -109,7 +109,7 @@ export default function LoginPage() {
                   </div>
 
                   <div className="text-xs text-center group relative text-white flex w-full justify-center rounded-md border border-transparent">
-                    <Mail size={14} />
+                    {/* <Mail size={14} /> */}
                     <p>
                       &nbsp;We will email you a magic link for a password-free
                       sign-in.
