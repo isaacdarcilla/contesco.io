@@ -19,6 +19,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -54,6 +55,7 @@ const EventSchema = z
 type EventData = z.infer<typeof EventSchema>;
 
 export default function CreateEventDrawer({}) {
+  const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
@@ -65,6 +67,7 @@ export default function CreateEventDrawer({}) {
   });
 
   const onSubmit: SubmitHandler<EventData> = async (form: EventData) => {
+    setLoading(true);
     try {
       const response = await fetch("/api/event/create", {
         method: "POST",
@@ -88,6 +91,7 @@ export default function CreateEventDrawer({}) {
         duration: 10000,
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -249,7 +253,7 @@ export default function CreateEventDrawer({}) {
               size="sm"
               onClick={onClose}
             >
-              Cancel
+              Close
             </Button>
             <Button
               leftIcon={<Save size="15" />}
@@ -257,6 +261,7 @@ export default function CreateEventDrawer({}) {
               rounded="sm"
               size="sm"
               onClick={handleSubmit(onSubmit)}
+              isLoading={loading}
             >
               Create
             </Button>
