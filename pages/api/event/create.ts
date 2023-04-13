@@ -17,17 +17,20 @@ export default async function handle(
 
   const session = await getServerSession(req, res, authOptions);
 
-  const result = await prisma.event.create({
-    data: {
-      name: eventName,
-      organizer: organizerName,
-      user: { connect: { email: session?.user?.email! } },
-      category: categoryName,
-      description: eventDescription,
-      eventStarts: new Date(eventStartDate).toISOString(),
-      eventEnds: new Date(eventEndDate).toISOString(),
-    },
-  });
+  if (session) {
+    const result = await prisma.event.create({
+      data: {
+        name: eventName,
+        organizer: organizerName,
+        user: { connect: { email: session?.user?.email! } },
+        category: categoryName,
+        description: eventDescription,
+        eventStarts: new Date(eventStartDate).toISOString(),
+        eventEnds: new Date(eventEndDate).toISOString(),
+      },
+    });
+    return res.json(result);
+  }
 
-  return res.json(result);
+  return res.status(401).json({ message: "Unauthorized" });
 }

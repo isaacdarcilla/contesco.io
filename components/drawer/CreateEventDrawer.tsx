@@ -23,20 +23,21 @@ import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
+import CustomToast from "../toast/CustomToast";
 
 const EventSchema = z
   .object({
     eventName: z
       .string()
-      .min(1, "Field is required.")
+      .min(6, "Field must contain at least 6 characters.")
       .max(25, "Field must contain at most 25 characters."),
     organizerName: z
       .string()
-      .min(1, "Field is required.")
+      .min(6, "Field must contain at least 6 characters.")
       .max(25, "Field must contain at most 25 characters."),
     categoryName: z
       .string()
-      .min(1, "Field is required.")
+      .min(6, "Field must contain at least 6 characters.")
       .max(25, "Field must contain at most 25 characters."),
     eventStartDate: z.string().min(1, "Field is required."),
     eventEndDate: z.string().min(1, "Field is required."),
@@ -57,6 +58,7 @@ export default function CreateEventDrawer({}) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<EventData>({
     resolver: zodResolver(EventSchema),
@@ -64,18 +66,33 @@ export default function CreateEventDrawer({}) {
 
   const onSubmit: SubmitHandler<EventData> = async (form: EventData) => {
     try {
-      await fetch("/api/event/create", {
+      const response = await fetch("/api/event/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+
+      if (response.status === 200) {
+        reset();
+        onClose();
+        toast.success("New event created", {
+          duration: 10000,
+        });
+      } else {
+        toast.error("An error occurred", {
+          duration: 10000,
+        });
+      }
     } catch (error) {
-      console.error(error);
+      toast.error("An error occurred", {
+        duration: 10000,
+      });
     }
   };
 
   return (
     <>
+      <CustomToast />
       <Button
         leftIcon={<Plus size="15" />}
         size="sm"
