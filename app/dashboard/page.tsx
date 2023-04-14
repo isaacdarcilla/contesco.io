@@ -19,8 +19,6 @@ export default function HomePage() {
   const [events, setEvents] = useState([]);
   const { data: session, status } = useSession();
 
-  console.log(events);
-
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
       setEmail(session.user.email);
