@@ -2,7 +2,15 @@
 
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+
+const theme = extendTheme({
+  colors: {
+    brand: {
+      100: "#232323",
+    },
+  },
+});
 
 export default function RootLayout({
   children,
@@ -14,7 +22,7 @@ export default function RootLayout({
       <head />
       <SessionProvider>
         <body>
-          <ChakraProvider>{children}</ChakraProvider>
+          <ChakraProvider theme={theme}>{children}</ChakraProvider>
         </body>
       </SessionProvider>
     </html>

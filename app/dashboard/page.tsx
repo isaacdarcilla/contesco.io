@@ -1,6 +1,14 @@
 "use client";
 
 import CreateEventDrawer from "@/components/drawer/CreateEventDrawer";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -23,6 +31,30 @@ export default function HomePage() {
             Looks like you don't have an event yet? Create your first event.
           </p>
           <CreateEventDrawer />
+
+          <SimpleGrid
+            className="my-8"
+            spacing={4}
+            templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+          >
+            <Card rounded="sm" background="brand.100">
+              <CardBody>
+                <Text className="text-white">
+                  View a summary of all your customers over the last month.
+                </Text>
+              </CardBody>
+              <CardFooter>
+                <Button
+                  size="sm"
+                  rounded="sm"
+                  variant="link"
+                  colorScheme="green"
+                >
+                  View
+                </Button>
+              </CardFooter>
+            </Card>
+          </SimpleGrid>
         </section>
       </div>
     </main>
