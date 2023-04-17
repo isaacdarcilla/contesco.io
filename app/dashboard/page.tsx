@@ -25,7 +25,7 @@ export default function HomePage() {
     }
 
     async function getEvents() {
-      const response = await fetch("/api/event/list");
+      const response = await fetch("/api/event/lists");
       const json = await response.json();
       setEvents(json);
     }

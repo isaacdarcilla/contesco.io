@@ -83,7 +83,8 @@ export default function LoginPage() {
                       <Input
                         value={email}
                         type="email"
-                        className="text-white"
+                        backgroundColor="brand.200"
+                        textColor="gray.400"
                         size="sm"
                         focusBorderColor="blue.400"
                         variant="filled"
