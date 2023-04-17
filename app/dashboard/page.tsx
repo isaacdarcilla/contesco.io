@@ -1,6 +1,8 @@
 "use client";
 
 import CreateEventDrawer from "@/components/drawer/CreateEventDrawer";
+import Skeleton from "@/components/loading/Skeleton";
+import CustomToast from "@/components/toast/CustomToast";
 import Event from "@/lib/types/Event";
 import {
   Button,
@@ -13,33 +15,41 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useQuery } from "react-query";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
-  const [events, setEvents] = useState([]);
   const { data: session, status } = useSession();
+
+  const { isLoading, error, data } = useQuery("events", () =>
+    fetch("/api/event/lists").then((res) => res.json())
+  );
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
       setEmail(session.user.email);
     }
-
-    async function getEvents() {
-      const response = await fetch("/api/event/lists");
-      const json = await response.json();
-      setEvents(json);
-    }
-
-    getEvents();
   }, []);
+
+  if (isLoading) {
+    return <Skeleton center={true} />;
+  }
+
+  if (error) {
+    return toast.error("An error occurred", {
+      duration: 10000,
+    });
+  }
 
   return (
     <main>
+      <CustomToast />
       <div className="w-full h-full flex flex-col container">
         <section className="container p-12 mx-auto">
           <p className="text-xl font-bold text-white">Hey, {email}!</p>
           <p className="text-white text-sm space-y-3 mb-5">
-            {events.length < 0
+            {!data || !data.length
               ? `Looks like you don't have an event yet? Create your first event.`
               : `You can always create new events.`}
           </p>
@@ -50,30 +60,35 @@ export default function HomePage() {
             spacing={4}
             templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
           >
-            {events.map((event: Event) => (
-              <Card key={event.id} rounded="sm" background="brand.100">
-                <CardBody>
-                  <Text fontSize="lg" fontWeight="bold" className="text-white">
-                    {event.name}
-                  </Text>
-                  <Text fontSize="sm" className="text-white">
-                    {event.description}
-                  </Text>
-                </CardBody>
-                <CardFooter>
-                  <Link href={`dashboard/event/${event.id}`}>
-                    <Button
-                      size="sm"
-                      rounded="sm"
-                      variant="link"
-                      colorScheme="green"
+            {data &&
+              data.map((event: Event) => (
+                <Card key={event.id} rounded="sm" background="brand.100">
+                  <CardBody>
+                    <Text
+                      fontSize="lg"
+                      fontWeight="bold"
+                      className="text-white"
                     >
-                      View
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
+                      {event.name}
+                    </Text>
+                    <Text fontSize="sm" className="text-white">
+                      {event.description}
+                    </Text>
+                  </CardBody>
+                  <CardFooter>
+                    <Link href={`dashboard/event/${event.id}`}>
+                      <Button
+                        size="sm"
+                        rounded="sm"
+                        variant="link"
+                        colorScheme="green"
+                      >
+                        View
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ))}
             ;
           </SimpleGrid>
         </section>
