@@ -113,14 +113,11 @@ export default function CreateEventDrawer({}) {
         placement="right"
         onClose={onClose}
         size="md"
-        colorScheme="brand.100"
       >
         <DrawerOverlay />
-        <DrawerContent overflowY="scroll" backgroundColor="brand.100">
+        <DrawerContent overflowY="scroll">
           <DrawerCloseButton />
-          <DrawerHeader fontSize="md" color="white">
-            Create new event
-          </DrawerHeader>
+          <DrawerHeader fontSize="md">Create new event</DrawerHeader>
           <DrawerBody overflowY="scroll">
             <p className="text-gray-400 text-xs text-left mb-5">
               Your event or contest will have a dedicated URL which will be used
@@ -133,7 +130,6 @@ export default function CreateEventDrawer({}) {
               <FormControl isInvalid={errors.eventName != null}>
                 <Input
                   placeholder="Event name"
-                  backgroundColor="brand.200"
                   size="sm"
                   focusBorderColor="blue.400"
                   variant="filled"
@@ -153,7 +149,6 @@ export default function CreateEventDrawer({}) {
               <FormControl isInvalid={errors.organizerName != null}>
                 <Input
                   placeholder="Organizer name"
-                  backgroundColor="brand.200"
                   size="sm"
                   focusBorderColor="blue.400"
                   variant="filled"
@@ -172,7 +167,6 @@ export default function CreateEventDrawer({}) {
               <FormControl isInvalid={errors.categoryName != null}>
                 <Input
                   placeholder="Category e.g. Singing, Dancing"
-                  backgroundColor="brand.200"
                   size="sm"
                   focusBorderColor="blue.400"
                   variant="filled"
@@ -198,7 +192,6 @@ export default function CreateEventDrawer({}) {
                 </FormLabel>
                 <Input
                   type="datetime-local"
-                  backgroundColor="brand.200"
                   textColor="gray.500"
                   size="sm"
                   focusBorderColor="blue.400"
@@ -225,7 +218,6 @@ export default function CreateEventDrawer({}) {
                 </FormLabel>
                 <Input
                   type="datetime-local"
-                  backgroundColor="brand.200"
                   textColor="gray.500"
                   size="sm"
                   focusBorderColor="blue.400"
@@ -245,7 +237,6 @@ export default function CreateEventDrawer({}) {
               <FormControl isInvalid={errors.eventDescription != null}>
                 <Textarea
                   placeholder="Write event description..."
-                  backgroundColor="brand.200"
                   size="sm"
                   resize="vertical"
                   rounded="sm"
