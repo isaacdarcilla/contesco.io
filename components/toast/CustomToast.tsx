@@ -10,6 +10,7 @@ export default function CustomToast() {
           background: "#333",
           color: "#fff",
           fontSize: "12px",
+          borderRadius: "3px",
         },
       }}
     >
@@ -21,7 +22,7 @@ export default function CustomToast() {
               {message}
               {t.type !== "loading" && (
                 <span className="mx-2">
-                  <button title="" onClick={() => toast.dismiss(t.id)}>
+                  <button type="button" onClick={() => toast.dismiss(t.id)}>
                     <X className="mt-1" size={15} />
                   </button>
                 </span>
