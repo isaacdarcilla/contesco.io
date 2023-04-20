@@ -18,12 +18,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useMutation } from "react-query";
 import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import CustomToast from "../toast/CustomToast";
+import axios from "axios";
 
 const EventSchema = z
   .object({
@@ -53,8 +54,17 @@ const EventSchema = z
 
 type EventData = z.infer<typeof EventSchema>;
 
+const createEvent = async (form: EventData) => {
+  const response = await axios.post("/api/event/create", form);
+
+  if (response.status !== 200) {
+    throw new Error("An error occurred");
+  }
+
+  return response.data;
+};
+
 export default function CreateEventDrawer({}) {
-  const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
@@ -65,32 +75,23 @@ export default function CreateEventDrawer({}) {
     resolver: zodResolver(EventSchema),
   });
 
-  const onSubmit: SubmitHandler<EventData> = async (form: EventData) => {
-    setLoading(true);
-    try {
-      const response = await fetch("/api/event/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+  const { isLoading, mutate } = useMutation(createEvent, {
+    onSuccess: () => {
+      reset();
+      onClose();
+      toast.success("New event created", {
+        duration: 10000,
       });
-
-      if (response.status === 200) {
-        reset();
-        onClose();
-        toast.success("New event created", {
-          duration: 10000,
-        });
-      } else {
-        toast.error("An error occurred", {
-          duration: 10000,
-        });
-      }
-    } catch (error) {
+    },
+    onError: () => {
       toast.error("An error occurred", {
         duration: 10000,
       });
-    }
-    setLoading(false);
+    },
+  });
+
+  const onSubmit: SubmitHandler<EventData> = async (form: EventData) => {
+    mutate(form);
   };
 
   return (
@@ -280,7 +281,7 @@ export default function CreateEventDrawer({}) {
               rounded="sm"
               size="sm"
               onClick={handleSubmit(onSubmit)}
-              isLoading={loading}
+              isLoading={isLoading}
             >
               Create
             </Button>

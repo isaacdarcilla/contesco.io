@@ -17,13 +17,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
+import axios from "axios";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const { data: session, status } = useSession();
 
   const { isLoading, error, data } = useQuery("events", () =>
-    fetch("/api/event/lists").then((res) => res.json())
+    axios.get("/api/event/lists").then((res) => res.data)
   );
 
   useEffect(() => {
