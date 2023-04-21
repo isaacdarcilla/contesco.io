@@ -18,7 +18,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "react-query";
+import { useMutation, QueryClient } from "react-query";
 import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -45,7 +45,7 @@ const EventSchema = z
     eventDescription: z
       .string()
       .min(12, "Field must contain at least 12 characters.")
-      .max(144, "Field must contain at most 144 characters."),
+      .max(280, "Field must contain at most 280 characters."),
   })
   .refine((data) => data.eventStartDate < data.eventEndDate, {
     message: "Event end date must be after start date.",
@@ -54,12 +54,16 @@ const EventSchema = z
 
 type EventData = z.infer<typeof EventSchema>;
 
+const queryClient = new QueryClient();
+
 const createEvent = async (form: EventData) => {
   const response = await axios.post("/api/event/create", form);
 
   if (response.status !== 200) {
     throw new Error("An error occurred");
   }
+
+  await queryClient.invalidateQueries("events");
 
   return response.data;
 };

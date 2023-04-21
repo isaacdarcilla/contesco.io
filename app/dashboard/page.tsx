@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import axios from "axios";
+import truncateText from "@/lib/global/helper";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
@@ -73,7 +74,7 @@ export default function HomePage() {
                       {event.name}
                     </Text>
                     <Text fontSize="sm" className="text-white">
-                      {event.description}
+                      {truncateText(event.description, 25)}
                     </Text>
                   </CardBody>
                   <CardFooter>
