@@ -1,34 +1,42 @@
 "use client";
 
+import Skeleton from "@/components/loading/Skeleton";
 import CustomToast from "@/components/toast/CustomToast";
+import Search from "@/lib/types/Search";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useQuery } from "react-query";
 
-type Props = {
-  params: {
-    slug: string;
-  };
-  searchParams: {};
-};
+export default function EventPage({ params }: Search) {
+  const router = useRouter();
+  const { isLoading, data } = useQuery("event", () =>
+    axios.get(`/api/event/${params.slug}`).then((res) => res.data)
+  );
 
-export default function EventPage({ params }: Props) {
+  if (isLoading) {
+    return <Skeleton center={true} />;
+  }
+
+  if (!data) {
+    return router.push("/dashboard");
+  }
+
   return (
     <main>
       <CustomToast />
       <div className="w-full h-full flex flex-col container">
         <section className="container p-12 mx-auto">
-          <Breadcrumb color="gray.200" fontWeight="bold" fontSize="xs">
+          <Breadcrumb color="gray" fontWeight="bold" fontSize="xs">
             <BreadcrumbItem>
-              <Link href="dashboard">
-                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-              </Link>
+              <Link href="/dashboard">Dashboard</Link>
             </BreadcrumbItem>
-
-            <BreadcrumbItem color="gray">
+            <BreadcrumbItem>
               <BreadcrumbLink>Event</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-          <p className="text-xl font-bold text-white">Event, {params.slug}!</p>
+          <p className="text-xl font-bold text-white space-y-4">{data.name}</p>
         </section>
       </div>
     </main>
