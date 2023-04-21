@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { createEvent } from "@/lib/services/event.service";
+import { getEventById } from "@/lib/services/event.service";
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
@@ -9,7 +9,12 @@ export default async function handle(
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {
-    const result = await createEvent(req, session);
+    const result = await getEventById(req, session);
+
+    if (!result) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
     return res.json(result);
   }
 

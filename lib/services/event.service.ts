@@ -1,11 +1,17 @@
 import { NextApiRequest } from "next";
 import prisma from "../prismadb";
 
-async function getEvents() {
-  return await prisma.event.findMany();
+export async function getEvents(session: any) {
+  return await prisma.event.findMany({
+    where: {
+      user: {
+        email: session?.user?.email!,
+      },
+    },
+  });
 }
 
-async function createEvent(req: NextApiRequest, session: any) {
+export async function createEvent(req: NextApiRequest, session: any) {
   const {
     eventName,
     organizerName,
@@ -28,4 +34,14 @@ async function createEvent(req: NextApiRequest, session: any) {
   });
 }
 
-export default { getEvents, createEvent };
+export async function getEventById(req: NextApiRequest, session: any) {
+  const { id } = req.query;
+  return await prisma.event.findFirst({
+    where: {
+      id: id ? { equals: id as string } : undefined,
+      user: {
+        email: session?.user?.email!,
+      },
+    },
+  });
+}
