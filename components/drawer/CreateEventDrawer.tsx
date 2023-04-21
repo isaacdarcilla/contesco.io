@@ -68,7 +68,7 @@ const createEvent = async (form: EventData) => {
   return response.data;
 };
 
-export default function CreateEventDrawer({}) {
+export default function CreateEventDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,

@@ -20,6 +20,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import truncateText from "@/lib/global/helper";
 import { ArrowRight } from "react-feather";
+import EventFilter from "@/components/filter/EventFilter";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
@@ -56,7 +57,10 @@ export default function HomePage() {
               ? `Looks like you don't have an event yet? Create your first event.`
               : `You can always create new events.`}
           </p>
-          <CreateEventDrawer />
+          <div className="flex justify-between">
+            <CreateEventDrawer />
+            <EventFilter />
+          </div>
 
           <SimpleGrid
             className="my-7"
@@ -65,7 +69,7 @@ export default function HomePage() {
           >
             {data &&
               data.map((event: Event) => (
-                <Card key={event.id} rounded="md" background="brand.100">
+                <Card key={event.id} rounded="sm" background="brand.100">
                   <CardBody>
                     <Text
                       fontSize="lg"
