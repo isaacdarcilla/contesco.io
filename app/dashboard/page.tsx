@@ -61,18 +61,18 @@ export default function HomePage() {
           <SimpleGrid
             className="my-7"
             spacing={4}
-            templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+            templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
           >
             {data &&
               data.map((event: Event) => (
-                <Card key={event.id} rounded="sm" background="brand.100">
+                <Card key={event.id} rounded="md" background="brand.100">
                   <CardBody>
                     <Text
                       fontSize="lg"
                       fontWeight="bold"
                       className="text-white"
                     >
-                      {truncateText(event.name, 12)}
+                      {truncateText(event.name, 20)}
                     </Text>
                     <Text fontSize="sm" className="text-white">
                       {truncateText(event.description, 50)}

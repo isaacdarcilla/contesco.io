@@ -8,6 +8,9 @@ export async function getEvents(session: any) {
         email: session?.user?.email!,
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 }
 
