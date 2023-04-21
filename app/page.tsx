@@ -85,6 +85,7 @@ export default function LoginPage() {
                         type="email"
                         backgroundColor="brand.200"
                         textColor="gray.400"
+                        borderColor="gray.500"
                         size="sm"
                         focusBorderColor="blue.400"
                         variant="filled"
@@ -97,6 +98,7 @@ export default function LoginPage() {
 
                       <Button
                         colorScheme="green"
+                        loadingText="Wait please..."
                         size="sm"
                         rounded="sm"
                         isLoading={loading}
