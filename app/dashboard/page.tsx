@@ -19,6 +19,7 @@ import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import axios from "axios";
 import truncateText from "@/lib/global/helper";
+import { ArrowRight } from "react-feather";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
@@ -71,10 +72,10 @@ export default function HomePage() {
                       fontWeight="bold"
                       className="text-white"
                     >
-                      {event.name}
+                      {truncateText(event.name, 12)}
                     </Text>
                     <Text fontSize="sm" className="text-white">
-                      {truncateText(event.description, 25)}
+                      {truncateText(event.description, 50)}
                     </Text>
                   </CardBody>
                   <CardFooter>
@@ -84,6 +85,7 @@ export default function HomePage() {
                         rounded="sm"
                         variant="link"
                         colorScheme="green"
+                        rightIcon={<ArrowRight size={15} />}
                       >
                         View
                       </Button>
