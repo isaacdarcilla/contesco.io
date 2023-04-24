@@ -35,7 +35,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
           </Button>
         </div>
       </nav>
-      <section className="container mx-auto max-width">
+      <section className="container mx-auto max-width overflow-y-auto">
         {status !== "loading" ? children : <Skeleton center={true} />}
       </section>
     </div>
