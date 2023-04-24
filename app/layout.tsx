@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <SessionProvider>
-        <body>
+        <body className="scroll-behavior:smooth">
           <QueryClientProvider client={queryClient}>
             <ChakraProvider theme={theme}>{children}</ChakraProvider>
           </QueryClientProvider>
