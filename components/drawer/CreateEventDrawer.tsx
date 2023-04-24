@@ -18,7 +18,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, QueryClient, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
