@@ -9,7 +9,7 @@ export default async function handle(
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {
-    const result = await getEvents(session);
+    const result = await getEvents(req, session);
     return res.json(result);
   }
 

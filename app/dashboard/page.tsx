@@ -21,13 +21,20 @@ import axios from "axios";
 import truncateText from "@/lib/global/helper";
 import { ArrowRight } from "react-feather";
 import EventFilter from "@/components/filter/EventFilter";
+import { useSearchParams } from "next/navigation";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+
+  const direction = searchParams?.get("direction") ?? "asc";
+  const column = searchParams?.get("column") ?? "createdAt";
 
   const { isLoading, error, data } = useQuery("events", () =>
-    axios.get("/api/event/lists").then((res) => res.data)
+    axios
+      .get(`/api/event/lists?column=${column}&direction=${direction}`)
+      .then((res) => res.data)
   );
 
   useEffect(() => {

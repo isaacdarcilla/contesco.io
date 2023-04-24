@@ -16,14 +16,19 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Filter } from "react-feather";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function EventFilter() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [direction, setDirection] = useState("asc");
-  const [column, setColumn] = useState("created_at");
+  const [direction, setDirection] = useState(
+    searchParams?.get("direction") ?? "asc"
+  );
+  const [column, setColumn] = useState(
+    searchParams?.get("column") ?? "createdAt"
+  );
 
   const handleFilter = async () => {
     router.push(`/dashboard?column=${column}&direction=${direction}`);
@@ -51,7 +56,14 @@ export default function EventFilter() {
           <ModalHeader color="white">Filter Events</ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody>
-            <RadioGroup name="direction" color="white" defaultValue="asc">
+            <RadioGroup
+              onChange={(e: any) => {
+                setDirection(e);
+              }}
+              name="direction"
+              color="white"
+              defaultValue={direction}
+            >
               <Stack>
                 <Text fontWeight="bold">By Direction</Text>
                 <Radio value="asc" size="md" colorScheme="green">
@@ -62,7 +74,14 @@ export default function EventFilter() {
                 </Radio>
               </Stack>
             </RadioGroup>
-            <RadioGroup name="column" color="white" defaultValue="createdAt">
+            <RadioGroup
+              onChange={(e: any) => {
+                setColumn(e);
+              }}
+              name="column"
+              color="white"
+              defaultValue={column}
+            >
               <Stack className="mt-4">
                 <Text fontWeight="bold">By Column</Text>
                 <Radio value="name" size="md" colorScheme="green">
@@ -83,7 +102,10 @@ export default function EventFilter() {
               size="sm"
               textColor="red.500"
               rounded="sm"
-              onClick={onClose}
+              onClick={() => {
+                onClose();
+                handleClear();
+              }}
             >
               Clear
             </Button>
@@ -91,7 +113,10 @@ export default function EventFilter() {
               size="sm"
               rounded="sm"
               colorScheme="green"
-              onClick={onClose}
+              onClick={() => {
+                onClose();
+                handleFilter();
+              }}
             >
               Apply
             </Button>

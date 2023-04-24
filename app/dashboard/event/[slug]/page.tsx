@@ -36,7 +36,7 @@ export default function EventPage({ params }: Search) {
               <BreadcrumbLink>Event</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-          <p className="text-xl font-bold text-white space-y-4">{data.name}</p>
+          <p className="text-xl font-bold text-white space-y-4">{data?.name}</p>
         </section>
       </div>
     </main>

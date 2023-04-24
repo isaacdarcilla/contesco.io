@@ -1,7 +1,10 @@
 import { NextApiRequest } from "next";
 import prisma from "../prismadb";
 
-export async function getEvents(session: any) {
+export async function getEvents(req: NextApiRequest, session: any) {
+  const column = req.query.column as string;
+  const direction = req.query.direction as string;
+
   return await prisma.event.findMany({
     where: {
       user: {
@@ -9,7 +12,7 @@ export async function getEvents(session: any) {
       },
     },
     orderBy: {
-      createdAt: "desc",
+      [column]: direction,
     },
   });
 }
