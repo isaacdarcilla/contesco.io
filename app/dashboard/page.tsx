@@ -31,10 +31,12 @@ export default function HomePage() {
   const direction = searchParams?.get("direction") ?? "asc";
   const column = searchParams?.get("column") ?? "createdAt";
 
-  const { isLoading, error, data } = useQuery("events", () =>
-    axios
-      .get(`/api/event/lists?column=${column}&direction=${direction}`)
-      .then((res) => res.data)
+  const { isLoading, error, data } = useQuery(
+    ["events", { column, direction }],
+    () =>
+      axios
+        .get(`/api/event/lists?column=${column}&direction=${direction}`)
+        .then((res) => res.data)
   );
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export default function HomePage() {
       <CustomToast />
       <div className="w-full h-full flex flex-col container">
         <section className="container p-12 mx-auto">
-          <p className="text-xl font-bold text-white">Hey, {email}!</p>
+          <p className="text-xl font-bold text-white">Hi, {email ?? "user"}!</p>
           <p className="text-white text-sm space-y-3 mb-5">
             {!data || !data.length
               ? `Looks like you don't have an event yet? Create your first event.`

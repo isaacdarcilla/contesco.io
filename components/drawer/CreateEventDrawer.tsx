@@ -54,8 +54,6 @@ const EventSchema = z
 
 type EventData = z.infer<typeof EventSchema>;
 
-const queryClient = new QueryClient();
-
 const createEvent = async (form: EventData) => {
   const response = await axios.post("/api/event/create", form);
 
