@@ -18,7 +18,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, QueryClient } from "react-query";
+import { useMutation, QueryClient, useQueryClient } from "react-query";
 import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -63,12 +63,11 @@ const createEvent = async (form: EventData) => {
     throw new Error("An error occurred");
   }
 
-  await queryClient.invalidateQueries("events");
-
   return response.data;
 };
 
 export default function CreateEventDrawer() {
+  const queryClient = useQueryClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
@@ -83,6 +82,7 @@ export default function CreateEventDrawer() {
     onSuccess: () => {
       reset();
       onClose();
+      queryClient.invalidateQueries("events");
       toast.success("New event created", {
         duration: 10000,
       });
