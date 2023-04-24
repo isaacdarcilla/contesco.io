@@ -8,7 +8,7 @@ RUN npm install --ignore-scripts
 
 COPY . .
 
-RUN npm build
+RUN npm run build
 
 EXPOSE 3000
 
