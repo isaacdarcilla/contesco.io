@@ -17,7 +17,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
         <div className="flex flex-shrink-0 items-center space-x-4 mx-3 p-4">
           <Button
             size="xs"
-            className="bg-primary hover:bg-gray-700 hover:border-gray-800 focus:border-none -mr-2"
+            className="bg-primary rounded-md hover:bg-gray-700 hover:border-gray-800 focus:border-none -mr-2"
           >
             &nbsp;
             <MessageCircle size={14} /> &nbsp;
@@ -27,7 +27,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
           </Button>
           <Button
             size="xs"
-            className="bg-primary hover:bg-gray-700 hover:border-gray-800 focus:border-none"
+            className="bg-primary rounded-md hover:bg-gray-700 hover:border-gray-800 focus:border-none"
           >
             &nbsp;
             <Bell size={14} />
