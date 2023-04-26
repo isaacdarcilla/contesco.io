@@ -22,7 +22,7 @@ export default function SidebarButton({
     <>
       <div className="flex gap-2">
         <Tooltip
-          className="mt-1 rounded-sm"
+          className="mt-1 rounded-sm font-extrabold"
           content={content}
           placement={"right"}
           style="light"

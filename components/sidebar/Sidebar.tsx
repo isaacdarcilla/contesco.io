@@ -1,14 +1,15 @@
 "use client";
 
 import { Tooltip } from "flowbite-react";
-import { LogOut } from "react-feather";
+import { LogOut, Settings } from "react-feather";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
 
 export default function Sidebar({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { status } = useSession();
 
   useEffect(() => {
@@ -30,8 +31,22 @@ export default function Sidebar({ children }: { children?: React.ReactNode }) {
         </div>
         <div className="flex flex-col items-center mt-0">{children}</div>
         <div className="flex flex-col items-center mt-0 absolute bottom-2">
+          {pathname !== "/dashboard" ? (
+            <Tooltip
+              className="mt-1 rounded-sm font-extrabold"
+              content="Setting"
+              placement="right"
+              style="light"
+            >
+              <div className="flex items-center justify-center w-10 h-10 mt-2 rounded hover:bg-primary hover:text-gray-300">
+                <Settings size={18} className="text-white" />
+              </div>
+            </Tooltip>
+          ) : (
+            ""
+          )}
           <Tooltip
-            className="mt-1 rounded-sm"
+            className="mt-1 rounded-sm font-extrabold"
             content="Logout"
             placement="right"
             style="light"
