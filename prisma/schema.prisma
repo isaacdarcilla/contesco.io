@@ -38,16 +38,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String    @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String       @unique
+  emailVerified DateTime?    @map("email_verified")
   image         String?
-  createdAt     DateTime? @default(now()) @map("created_at")
-  updatedAt     DateTime? @default(now()) @map("updated_at")
+  createdAt     DateTime?    @default(now()) @map("created_at")
+  updatedAt     DateTime?    @default(now()) @map("updated_at")
   accounts      Account[]
   sessions      Session[]
   events        Event[]
+  Contestant    Contestant[]
 
   @@map("users")
 }
@@ -62,8 +63,8 @@ model VerificationToken {
 }
 
 model Event {
-  id          String    @id @default(cuid())
-  userId      String    @map("user_id")
+  id          String       @id @default(cuid())
+  userId      String       @map("user_id")
   name        String
   description String
   organizer   String
@@ -71,13 +72,37 @@ model Event {
   category    String
   tags        String?
   banner      String?
-  slug        String?   @unique
-  eventStarts DateTime? @map("event_start")
-  eventEnds   DateTime? @map("event_end")
-  createdAt   DateTime? @default(now()) @map("created_at")
-  updatedAt   DateTime? @default(now()) @map("updated_at")
+  slug        String?      @unique
+  eventStarts DateTime?    @map("event_start")
+  eventEnds   DateTime?    @map("event_end")
+  createdAt   DateTime?    @default(now()) @map("created_at")
+  updatedAt   DateTime?    @default(now()) @map("updated_at")
+  contestants Contestant[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("events")
+}
+
+model Contestant {
+  id          String    @id @default(cuid())
+  eventId     String    @map("event_id")
+  userId      String    @map("user_id")
+  firstName   String    @map("first_name")
+  middleName  String?   @map("middle_name")
+  lastName    String    @map("last_name")
+  gender      String
+  age         Int
+  nationality String?
+  birthDate   String?   @map("birth_date")
+  phoneNumber String    @map("phone_number")
+  email       String
+  photo       String?
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedAt   DateTime? @default(now()) @map("updated_at")
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("contestants")
 }

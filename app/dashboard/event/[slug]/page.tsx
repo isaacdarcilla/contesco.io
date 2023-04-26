@@ -71,7 +71,7 @@ export default function EventPage({ params }: Search) {
                     fontWeight="bold"
                     fontSize={13}
                     icon={<Plus size={15} />}
-                    command="⌘C"
+                    command="Shift + C"
                   >
                     New Contestant
                   </MenuItem>
@@ -81,7 +81,7 @@ export default function EventPage({ params }: Search) {
                     fontWeight="bold"
                     fontSize={13}
                     icon={<Plus size={15} />}
-                    command="⌘J"
+                    command="Shift + J"
                   >
                     New Judge
                   </MenuItem>
@@ -91,7 +91,7 @@ export default function EventPage({ params }: Search) {
                     fontWeight="bold"
                     fontSize={13}
                     icon={<Plus size={15} />}
-                    command="⌘T"
+                    command="Shift + T"
                   >
                     New Criteria
                   </MenuItem>
@@ -102,7 +102,7 @@ export default function EventPage({ params }: Search) {
                     fontWeight="bold"
                     fontSize={13}
                     icon={<Settings size={15} />}
-                    command="⌘S"
+                    command="Shift + S"
                   >
                     Settings
                   </MenuItem>
