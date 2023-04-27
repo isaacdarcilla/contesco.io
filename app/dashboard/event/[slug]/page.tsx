@@ -1,5 +1,6 @@
 "use client";
 
+import CreateContestantDrawer from "@/components/drawer/CreateContestantDrawer";
 import Skeleton from "@/components/loading/Skeleton";
 import CustomToast from "@/components/toast/CustomToast";
 import Search from "@/lib/types/Search";
@@ -65,16 +66,7 @@ export default function EventPage({ params }: Search) {
                   Manage
                 </MenuButton>
                 <MenuList bgColor="brand.100" border="hidden">
-                  <MenuItem
-                    bgColor="brand.100"
-                    textColor="white"
-                    fontWeight="bold"
-                    fontSize={13}
-                    icon={<Plus size={15} />}
-                    command="Shift + C"
-                  >
-                    New Contestant
-                  </MenuItem>
+                  <CreateContestantDrawer />
                   <MenuItem
                     bgColor="brand.100"
                     textColor="white"

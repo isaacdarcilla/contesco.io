@@ -78,7 +78,12 @@ export default function HomePage() {
           >
             {data &&
               data.map((event: Event) => (
-                <Card key={event.id} rounded="sm" background="brand.100">
+                <Card
+                  key={event.id}
+                  rounded="sm"
+                  background="brand.100"
+                  className="hover:shadow-xl"
+                >
                   <CardBody>
                     <Text
                       fontSize="lg"
