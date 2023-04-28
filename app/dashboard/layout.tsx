@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <SessionProvider>
       <main className={montserrat.className}>
-        <div className="bg-gradient-to-tr from-[#2b2b2b] to-[#1C1C1C] opacity-100 h-screen w-full flex overflow-hidden tracking-tight">
+        <div className="bg-gradient-to-tr from-[#313030] to-[#1C1C1C] opacity-100 h-screen w-full flex overflow-hidden tracking-tight">
           <Sidebar>
             <SidebarButton content="Home" link="/dashboard" path="/dashboard">
               <Home size={18} />
