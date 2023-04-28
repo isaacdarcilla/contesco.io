@@ -16,6 +16,7 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { List, Plus, Settings } from "react-feather";
@@ -56,15 +57,17 @@ export default function EventPage({ params }: Search) {
             </div>
             <div className="my-2">
               <Menu size="sm">
-                <MenuButton
-                  as={Button}
-                  size="sm"
-                  rounded="sm"
-                  leftIcon={<List size={15} />}
-                  colorScheme="green"
-                >
-                  Manage
-                </MenuButton>
+                <motion.div whileHover={{ scale: 1.03 }}>
+                  <MenuButton
+                    as={Button}
+                    size="sm"
+                    rounded="sm"
+                    leftIcon={<List size={15} />}
+                    colorScheme="green"
+                  >
+                    Manage
+                  </MenuButton>
+                </motion.div>
                 <MenuList bgColor="brand.100" border="hidden">
                   <CreateContestantDrawer />
                   <MenuItem

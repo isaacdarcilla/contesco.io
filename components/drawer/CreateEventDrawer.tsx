@@ -25,6 +25,7 @@ import { toast } from "react-hot-toast";
 import { z } from "zod";
 import CustomToast from "../toast/CustomToast";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const EventSchema = z
   .object({
@@ -99,15 +100,17 @@ export default function CreateEventDrawer() {
   return (
     <>
       <CustomToast />
-      <Button
-        leftIcon={<Plus size="15" />}
-        size="sm"
-        rounded="sm"
-        colorScheme="green"
-        onClick={onOpen}
-      >
-        New event
-      </Button>
+      <motion.div whileHover={{ scale: 1.03 }}>
+        <Button
+          leftIcon={<Plus size="15" />}
+          size="sm"
+          rounded="sm"
+          colorScheme="green"
+          onClick={onOpen}
+        >
+          New event
+        </Button>
+      </motion.div>
 
       <Drawer
         onEsc={onClose}

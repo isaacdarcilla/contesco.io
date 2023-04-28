@@ -53,7 +53,7 @@ export default function LoginPage() {
       <section className="block">
         <div className="g-0 lg:flex lg:flex-wrap">
           <div className="md:px-0 lg:w-5/12">
-            <div className="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-secondary">
+            <div className="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-primary">
               <div className="w-full max-w-md space-y-8">
                 <div>
                   <h3 className="font-bold text-xl tracking-tight text-white">
@@ -128,7 +128,7 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
-          <div className="flex items-center lg:w-7/12 bg-primary">
+          <div className="flex items-center lg:w-7/12 bg-gradient-to-tr from-[#2b2b2b] to-[#1C1C1C]">
             <div className="w-full max-w-lg space-y-8 mx-auto">
               <div className="text-white text-3xl font-normal hidden lg:block">
                 Streamline your contests with Contesco — the hassle-free

@@ -18,6 +18,7 @@ import {
 import { Filter } from "react-feather";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function EventFilter() {
   const router = useRouter();
@@ -40,15 +41,17 @@ export default function EventFilter() {
 
   return (
     <div>
-      <Button
-        size="sm"
-        onClick={onOpen}
-        colorScheme="blue"
-        variant="link"
-        leftIcon={<Filter size={15} />}
-      >
-        Filter
-      </Button>
+      <motion.div whileHover={{ scale: 1.03 }}>
+        <Button
+          size="sm"
+          onClick={onOpen}
+          colorScheme="blue"
+          variant="link"
+          leftIcon={<Filter size={15} />}
+        >
+          Filter
+        </Button>
+      </motion.div>
 
       <Modal colorScheme="brand.100" onClose={onClose} isOpen={isOpen}>
         <ModalOverlay />

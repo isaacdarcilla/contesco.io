@@ -22,6 +22,7 @@ import truncateText from "@/lib/global/helper";
 import { ArrowRight } from "react-feather";
 import EventFilter from "@/components/filter/EventFilter";
 import { useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
@@ -78,38 +79,48 @@ export default function HomePage() {
           >
             {data &&
               data.map((event: Event) => (
-                <Card
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ delay: 0.1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
                   key={event.id}
-                  rounded="sm"
-                  background="brand.100"
-                  className="hover:shadow-xl"
                 >
-                  <CardBody>
-                    <Text
-                      fontSize="lg"
-                      fontWeight="bold"
-                      className="text-white"
-                    >
-                      {truncateText(event.name, 20)}
-                    </Text>
-                    <Text fontSize="sm" className="text-white">
-                      {truncateText(event.description, 50)}
-                    </Text>
-                  </CardBody>
-                  <CardFooter>
-                    <Link href={`dashboard/event/${event.id}`}>
-                      <Button
-                        size="sm"
-                        rounded="sm"
-                        variant="link"
-                        colorScheme="green"
-                        rightIcon={<ArrowRight size={15} />}
+                  <Card
+                    key={event.id}
+                    rounded="sm"
+                    background="brand.100"
+                    className="hover:shadow-xl"
+                    height={180}
+                  >
+                    <CardBody>
+                      <Text
+                        fontSize="lg"
+                        fontWeight="bold"
+                        className="text-white"
                       >
-                        View
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
+                        {truncateText(event.name, 20)}
+                      </Text>
+                      <Text fontSize="sm" className="text-white">
+                        {truncateText(event.description, 50)}
+                      </Text>
+                    </CardBody>
+                    <CardFooter>
+                      <Link href={`dashboard/event/${event.id}`}>
+                        <Button
+                          size="sm"
+                          rounded="sm"
+                          variant="link"
+                          colorScheme="green"
+                          rightIcon={<ArrowRight size={15} />}
+                        >
+                          View
+                        </Button>
+                      </Link>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
               ))}
             ;
           </SimpleGrid>
