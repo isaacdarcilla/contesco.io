@@ -12,9 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { Plus, Save } from "react-feather";
 import CustomToast from "../toast/CustomToast";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export default function CreateContestantDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useHotkeys("shift+c", () => onOpen());
 
   return (
     <div>
