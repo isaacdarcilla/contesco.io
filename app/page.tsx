@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import CustomToast from "@/components/toast/CustomToast";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const montserrat = Montserrat();
 
@@ -57,12 +58,14 @@ export default function LoginPage() {
               <div className="w-full max-w-md space-y-8">
                 <div>
                   <h3 className="font-bold text-xl tracking-tight text-white">
-                    <Image
-                      src="/logo_96px.png"
-                      alt="Logo"
-                      width={45}
-                      height={45}
-                    />{" "}
+                    <motion.div whileHover={{ scale: 1.05 }}>
+                      <Image
+                        src="/logo_96px.png"
+                        alt="Logo"
+                        width={45}
+                        height={45}
+                      />
+                    </motion.div>{" "}
                     contesco
                   </h3>
                   <h2 className="mt-6 text-3xl font-bold tracking-tight text-white">
@@ -84,11 +87,12 @@ export default function LoginPage() {
                         value={email}
                         type="email"
                         backgroundColor="brand.200"
-                        textColor="gray.400"
+                        textColor="gray.300"
                         borderColor="gray.500"
                         size="sm"
                         focusBorderColor="blue.400"
                         variant="filled"
+                        fontWeight="bold"
                         rounded="sm"
                         placeholder="you@example.com"
                         onChange={(e: any) =>

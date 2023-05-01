@@ -9,6 +9,9 @@ import {
   useDisclosure,
   DrawerFooter,
   Button,
+  Kbd,
+  Input,
+  FormControl,
 } from "@chakra-ui/react";
 import { Plus, Save } from "react-feather";
 import CustomToast from "../toast/CustomToast";
@@ -48,7 +51,30 @@ export default function CreateContestantDrawer() {
           <DrawerHeader fontSize="md" color="white">
             Create new contestant
           </DrawerHeader>
-          <DrawerBody overflowY="scroll"></DrawerBody>
+          <DrawerBody overflowY="scroll">
+            <p className="text-gray-400 text-xs text-left mb-5">
+              Create new contestants for your event or contest. You can update
+              the details of a contestant anytime.
+            </p>
+            <p className="hidden lg:block text-gray-400 text-xs text-left mb-5">
+              Press <Kbd>Shift + C</Kbd> to open the form and press{" "}
+              <Kbd>Esc</Kbd> key to close the form.
+            </p>
+            <div className="space-y-3">
+              <FormControl>
+                <Input
+                  placeholder="First name"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  size="sm"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  autoFocus={true}
+                  rounded="sm"
+                />
+              </FormControl>
+            </div>
+          </DrawerBody>
           <DrawerFooter>
             <Button
               rounded="sm"

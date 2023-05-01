@@ -39,7 +39,7 @@ export default function Sidebar({ children }: { children?: React.ReactNode }) {
               style="light"
             >
               <div className="flex items-center justify-center w-10 h-10 mt-2 rounded hover:bg-primary hover:text-gray-300">
-                <Settings size={18} className="text-white" />
+                <Settings role="button" size={18} className="text-white" />
               </div>
             </Tooltip>
           ) : (
@@ -53,6 +53,7 @@ export default function Sidebar({ children }: { children?: React.ReactNode }) {
           >
             <div className="flex items-center justify-center w-10 h-10 mt-2 rounded hover:bg-primary hover:text-gray-300">
               <LogOut
+                role="button"
                 onClick={() => handleLogout()}
                 size={18}
                 className="text-white"
