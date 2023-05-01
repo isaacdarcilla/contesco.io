@@ -37,12 +37,21 @@ model Session {
   @@map("sessions")
 }
 
+enum UserRole {
+  ADMIN
+  ORGANIZER
+  JUDGE
+  CONTESTANT
+  AUDIENCE
+}
+
 model User {
   id            String       @id @default(cuid())
   name          String?
   email         String       @unique
   emailVerified DateTime?    @map("email_verified")
   image         String?
+  role          UserRole     @default(ORGANIZER)
   createdAt     DateTime?    @default(now()) @map("created_at")
   updatedAt     DateTime?    @default(now()) @map("updated_at")
   accounts      Account[]
