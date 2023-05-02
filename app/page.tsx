@@ -9,18 +9,30 @@ import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import CustomToast from "@/components/toast/CustomToast";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useAnimate } from "framer-motion";
 
 const montserrat = Montserrat();
 
 export default function LoginPage() {
   const router = useRouter();
+  const [scope, animate] = useAnimate();
 
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const { status } = useSession();
 
   useEffect(() => {
+    animate(scope.current, {
+      scale: 1.1,
+      rotate: 360,
+      ease: "linear",
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      },
+    });
+
     if (status === "authenticated") {
       router.push("/dashboard");
     }
@@ -58,14 +70,13 @@ export default function LoginPage() {
               <div className="w-full max-w-md space-y-8">
                 <div>
                   <h3 className="font-bold text-xl tracking-tight text-white">
-                    <motion.div whileHover={{ scale: 1.05 }}>
-                      <Image
-                        src="/logo_96px.png"
-                        alt="Logo"
-                        width={45}
-                        height={45}
-                      />
-                    </motion.div>{" "}
+                    <Image
+                      ref={scope}
+                      src="/logo_96px.png"
+                      alt="Logo"
+                      width={45}
+                      height={45}
+                    />{" "}
                     contesco
                   </h3>
                   <h2 className="mt-6 text-3xl font-bold tracking-tight text-white">
