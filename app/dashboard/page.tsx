@@ -32,7 +32,7 @@ export default function HomePage() {
   const direction = searchParams?.get("direction") ?? "asc";
   const column = searchParams?.get("column") ?? "createdAt";
 
-  const { isLoading, error, data } = useQuery(
+  const { isLoading, isError, data } = useQuery(
     ["events", { column, direction }],
     () =>
       axios
@@ -50,8 +50,8 @@ export default function HomePage() {
     return <Skeleton center={true} />;
   }
 
-  if (error) {
-    return toast.error("An error occurred", {
+  if (isError) {
+    toast.error("An error occurred", {
       duration: 10000,
     });
   }
