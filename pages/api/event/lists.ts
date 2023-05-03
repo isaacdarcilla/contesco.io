@@ -17,7 +17,7 @@ export default async function handle(
 
   if (session) {
     try {
-      await limiter.check(res);
+      await limiter.check(res, 10, "EVENT_LIST");
 
       const result = await getEvents(req, session);
       return res.json(result);
