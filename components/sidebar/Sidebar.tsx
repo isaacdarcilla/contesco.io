@@ -18,7 +18,6 @@ export default function Sidebar({ children }: { children?: React.ReactNode }) {
     animate(scope.current, {
       scale: 1.1,
       rotate: 360,
-      ease: "linear",
       transition: {
         type: "spring",
         stiffness: 260,

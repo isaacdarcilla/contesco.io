@@ -36,7 +36,7 @@ export default function HomePage() {
     ["events", { column, direction }],
     () =>
       axios
-        .get(`/api/event/lists?column=${column}&direction=${direction}`)
+        .get(`/api/events/lists?column=${column}&direction=${direction}`)
         .then((res) => res.data)
   );
 

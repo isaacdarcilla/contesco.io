@@ -56,7 +56,7 @@ const EventSchema = z
 type EventData = z.infer<typeof EventSchema>;
 
 const createEvent = async (form: EventData) => {
-  const response = await axios.post("/api/event/create", form);
+  const response = await axios.post("/api/events/create", form);
 
   if (response.status !== 200) {
     throw new Error("An error occurred");

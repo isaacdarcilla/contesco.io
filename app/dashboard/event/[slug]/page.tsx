@@ -25,7 +25,7 @@ import { useQuery } from "react-query";
 export default function EventPage({ params }: Search) {
   const router = useRouter();
   const { isLoading, data } = useQuery("event", () =>
-    axios.get(`/api/event/${params.slug}`).then((res) => res.data)
+    axios.get(`/api/events/${params.slug}`).then((res) => res.data)
   );
 
   if (isLoading) {
