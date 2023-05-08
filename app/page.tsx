@@ -25,7 +25,6 @@ export default function LoginPage() {
     animate(scope.current, {
       scale: 1.1,
       rotate: 360,
-      ease: "linear",
       transition: {
         type: "spring",
         stiffness: 260,
@@ -128,7 +127,7 @@ export default function LoginPage() {
 
                   <div className="text-xs text-center group relative text-white flex w-full justify-center rounded-md border border-transparent">
                     {/* <Mail size={14} /> */}
-                    <p>
+                    <p className="font-normal">
                       &nbsp;We will email you a magic link for a password-free
                       sign-in.
                     </p>
