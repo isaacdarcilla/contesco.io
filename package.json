@@ -14,7 +14,8 @@
     "db:seed": "npx dotenv -e .env.local -- prisma db seed",
     "prisma:generate": "npx dotenv -e .env.local -- prisma generate",
     "prisma:studio": "npx dotenv -e .env.local -- prisma studio",
-    "production:build": "npx prisma generate && npx prisma migrate deploy && next build"
+    "production:build": "npx prisma generate && npx prisma migrate deploy && next build",
+    "test:e2e": "playwright test"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -53,6 +54,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.33.0",
     "@types/nodemailer": "^6.4.7",
     "@types/slug": "^5.0.3",
     "autoprefixer": "^10.4.14",
