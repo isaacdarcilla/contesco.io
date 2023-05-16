@@ -11,7 +11,6 @@ import {
   DrawerOverlay,
   FormControl,
   FormHelperText,
-  FormLabel,
   Input,
   Kbd,
   Textarea,
@@ -27,31 +26,24 @@ import CustomToast from "../toast/CustomToast";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-const EventSchema = z
-  .object({
-    eventName: z
-      .string()
-      .min(6, "Field must contain at least 6 characters.")
-      .max(25, "Field must contain at most 25 characters."),
-    organizerName: z
-      .string()
-      .min(6, "Field must contain at least 6 characters.")
-      .max(25, "Field must contain at most 25 characters."),
-    categoryName: z
-      .string()
-      .min(6, "Field must contain at least 6 characters.")
-      .max(25, "Field must contain at most 25 characters."),
-    eventStartDate: z.string().min(1, "Field is required."),
-    eventEndDate: z.string().min(1, "Field is required."),
-    eventDescription: z
-      .string()
-      .min(12, "Field must contain at least 12 characters.")
-      .max(280, "Field must contain at most 280 characters."),
-  })
-  .refine((data) => data.eventStartDate < data.eventEndDate, {
-    message: "Event end date must be after start date.",
-    path: ["eventEndDate"],
-  });
+const EventSchema = z.object({
+  eventName: z
+    .string()
+    .min(6, "Field must contain at least 6 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  organizerName: z
+    .string()
+    .min(6, "Field must contain at least 6 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  categoryName: z
+    .string()
+    .min(6, "Field must contain at least 6 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  eventDescription: z
+    .string()
+    .min(12, "Field must contain at least 12 characters.")
+    .max(280, "Field must contain at most 280 characters."),
+});
 
 type EventData = z.infer<typeof EventSchema>;
 
@@ -140,7 +132,6 @@ export default function CreateEventDrawer() {
                   placeholder="Event name"
                   backgroundColor="brand.200"
                   textColor="gray.400"
-                  size="sm"
                   focusBorderColor="blue.400"
                   variant="filled"
                   autoFocus={true}
@@ -161,7 +152,6 @@ export default function CreateEventDrawer() {
                   placeholder="Organizer name"
                   backgroundColor="brand.200"
                   textColor="gray.400"
-                  size="sm"
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
@@ -181,7 +171,6 @@ export default function CreateEventDrawer() {
                   placeholder="Category e.g. Singing, Dancing"
                   backgroundColor="brand.200"
                   textColor="gray.400"
-                  size="sm"
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
@@ -196,66 +185,11 @@ export default function CreateEventDrawer() {
                 </FormHelperText>
               </FormControl>
 
-              <FormControl isInvalid={errors.eventStartDate != null}>
-                <FormLabel
-                  fontSize="13"
-                  textColor="gray.400"
-                  fontWeight="normal"
-                >
-                  Event Start Date
-                </FormLabel>
-                <Input
-                  type="datetime-local"
-                  backgroundColor="brand.200"
-                  textColor="gray.400"
-                  size="sm"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  rounded="sm"
-                  {...register("eventStartDate")}
-                />
-                <FormHelperText
-                  marginTop="1"
-                  fontSize="small"
-                  textColor="red.500"
-                >
-                  {errors.eventStartDate?.message}
-                </FormHelperText>
-              </FormControl>
-
-              <FormControl isInvalid={errors.eventEndDate != null}>
-                <FormLabel
-                  fontSize="13"
-                  textColor="gray.400"
-                  fontWeight="normal"
-                >
-                  Event End Date
-                </FormLabel>
-                <Input
-                  type="datetime-local"
-                  backgroundColor="brand.200"
-                  textColor="gray.400"
-                  size="sm"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  rounded="sm"
-                  {...register("eventEndDate")}
-                />
-                <FormHelperText
-                  marginTop="1"
-                  fontSize="small"
-                  textColor="red.500"
-                >
-                  {errors.eventEndDate?.message}
-                </FormHelperText>
-              </FormControl>
-
               <FormControl isInvalid={errors.eventDescription != null}>
                 <Textarea
                   placeholder="Write event description..."
                   backgroundColor="brand.200"
                   textColor="gray.400"
-                  size="sm"
                   resize="vertical"
                   rounded="sm"
                   variant="filled"

@@ -12,6 +12,7 @@ import {
   Kbd,
   Input,
   FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
 import { Plus, Save } from "react-feather";
 import CustomToast from "../toast/CustomToast";
@@ -63,13 +64,83 @@ export default function CreateContestantDrawer() {
             <div className="space-y-3">
               <FormControl>
                 <Input
-                  placeholder="First name"
+                  type="file"
+                  placeholder="Photo"
                   backgroundColor="brand.200"
                   textColor="gray.400"
-                  size="sm"
                   focusBorderColor="blue.400"
                   variant="filled"
                   autoFocus={true}
+                  rounded="sm"
+                />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="First name"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Middle name"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Last name"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Gender"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Nationality"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Phone number"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Email address"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
                   rounded="sm"
                 />
               </FormControl>

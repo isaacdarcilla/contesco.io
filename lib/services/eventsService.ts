@@ -18,14 +18,7 @@ export async function getEvents(req: NextApiRequest, session: any) {
 }
 
 export async function createEvent(req: NextApiRequest, session: any) {
-  const {
-    eventName,
-    organizerName,
-    categoryName,
-    eventDescription,
-    eventStartDate,
-    eventEndDate,
-  } = req.body;
+  const { eventName, organizerName, categoryName, eventDescription } = req.body;
 
   await prisma.event.create({
     data: {
@@ -34,8 +27,6 @@ export async function createEvent(req: NextApiRequest, session: any) {
       user: { connect: { email: session?.user?.email! } },
       category: categoryName,
       description: eventDescription,
-      eventStarts: new Date(eventStartDate).toISOString(),
-      eventEnds: new Date(eventEndDate).toISOString(),
     },
   });
 }
