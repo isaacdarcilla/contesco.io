@@ -12,7 +12,6 @@ import {
   Kbd,
   Input,
   FormControl,
-  FormLabel,
 } from "@chakra-ui/react";
 import { Plus, Save } from "react-feather";
 import CustomToast from "../toast/CustomToast";
