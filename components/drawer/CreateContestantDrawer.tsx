@@ -12,13 +12,78 @@ import {
   Kbd,
   Input,
   FormControl,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { Plus, Save } from "react-feather";
 import CustomToast from "../toast/CustomToast";
 import { useHotkeys } from "react-hotkeys-hook";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/lib/constants";
+
+const ContestantSchema = z.object({
+  photo: z
+    .any()
+    .refine((files) => files?.length == 1, "Field is required.")
+    .refine(
+      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
+      `Max file size is 5MB.`
+    )
+    .refine(
+      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      "Only .jpg, .jpeg, .png and .webp files are accepted."
+    ),
+});
+
+type ContestantData = z.infer<typeof ContestantSchema>;
+
+const createContestant = async (form: ContestantData) => {
+  const response = await axios.post("/api/contestants/create", form);
+
+  if (response.status !== 200) {
+    throw new Error("An error occurred");
+  }
+
+  return response.data;
+};
 
 export default function CreateContestantDrawer() {
+  const queryClient = useQueryClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContestantData>({
+    resolver: zodResolver(ContestantSchema),
+  });
+
+  const { isLoading, mutate } = useMutation(createContestant, {
+    onSuccess: () => {
+      reset();
+      onClose();
+      queryClient.invalidateQueries("contestants");
+      toast.success("New contestant created", {
+        duration: 10000,
+      });
+    },
+    onError: () => {
+      toast.error("An error occurred", {
+        duration: 10000,
+      });
+    },
+  });
+
+  const onSubmit: SubmitHandler<ContestantData> = async (
+    form: ContestantData
+  ) => {
+    mutate(form);
+  };
 
   useHotkeys("shift+c", () => onOpen());
 
@@ -61,9 +126,14 @@ export default function CreateContestantDrawer() {
               <Kbd>Esc</Kbd> key to close the form.
             </p>
             <div className="space-y-3">
-              <FormControl>
+              <FormControl
+                className="align-center my-auto"
+                isInvalid={errors.photo != null}
+              >
                 <Input
                   type="file"
+                  textAlign="center"
+                  alignContent="center"
                   placeholder="Photo"
                   backgroundColor="brand.200"
                   textColor="gray.400"
@@ -71,7 +141,15 @@ export default function CreateContestantDrawer() {
                   variant="filled"
                   autoFocus={true}
                   rounded="sm"
+                  {...register("photo")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.photo?.message}</>
+                </FormHelperText>
               </FormControl>
               <FormControl>
                 <Input
@@ -160,7 +238,8 @@ export default function CreateContestantDrawer() {
               colorScheme="green"
               rounded="sm"
               size="sm"
-              onClick={() => {}}
+              onClick={handleSubmit(onSubmit)}
+              isLoading={isLoading}
               loadingText="Saving..."
             >
               Create Contestant
