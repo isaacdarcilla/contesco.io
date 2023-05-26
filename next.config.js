@@ -6,6 +6,13 @@ const nextConfig = {
       { loader: "@next/font/google", options: { subsets: ["latin"] } },
     ],
   },
+  webpack: (config) => {
+    if (!config.experiments) {
+      config.experiments = {};
+    }
+    config.experiments.topLevelAwait = true;
+    return config;
+  },
 };
 
 module.exports = nextConfig;

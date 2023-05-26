@@ -1,5 +1,6 @@
 import type { NextApiResponse } from "next";
 import { LRUCache } from "lru-cache";
+import { ServerResponse } from "http";
 
 type Options = {
   uniqueTokenPerInterval?: number;
@@ -14,7 +15,7 @@ export default function rateLimit(options?: Options) {
 
   return {
     check: (
-      res: NextApiResponse,
+      res: NextApiResponse | ServerResponse,
       limit: number = 10,
       token: string = "CACHE_TOKEN"
     ) =>

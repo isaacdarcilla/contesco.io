@@ -60,6 +60,7 @@ model User {
   Contestant    Contestant[]
 
   @@map("users")
+  @@index([name, email])
 }
 
 model VerificationToken {
@@ -91,6 +92,7 @@ model Event {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("events")
+  @@index([userId])
 }
 
 model Contestant {
@@ -114,4 +116,5 @@ model Contestant {
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("contestants")
+  @@index([userId, eventId, firstName, lastName, email])
 }
