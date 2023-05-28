@@ -4,6 +4,4 @@ export default interface Event {
   description: string;
   organizer: string;
   category: string;
-  start: string;
-  end: string;
 }

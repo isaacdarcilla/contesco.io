@@ -3,7 +3,6 @@
 import CreateEventDrawer from "@/components/drawer/CreateEventDrawer";
 import Skeleton from "@/components/loading/Skeleton";
 import CustomToast from "@/components/toast/CustomToast";
-import Event from "@/src/types/Event";
 import {
   Button,
   Card,
@@ -17,12 +16,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
-import axios from "axios";
 import truncateText from "@/src/utils/helper";
 import { ArrowRight } from "react-feather";
 import EventFilter from "@/components/filter/EventFilter";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
+import { getEvents } from "@/src/api";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
@@ -34,10 +33,7 @@ export default function HomePage() {
 
   const { isLoading, isError, data } = useQuery(
     ["events", { column, direction }],
-    () =>
-      axios
-        .get(`/api/events/lists?column=${column}&direction=${direction}`)
-        .then((res) => res.data)
+    () => getEvents()
   );
 
   useEffect(() => {
@@ -57,13 +53,13 @@ export default function HomePage() {
   }
 
   return (
-    <main>
+    <>
       <CustomToast />
       <div className="w-full h-full flex flex-col container">
         <section className="container p-12 mx-auto">
           <p className="text-xl font-bold text-white">Hi, {email ?? "user"}!</p>
           <p className="text-white text-sm space-y-3 mb-5">
-            {!data || !data.length
+            {!data?.getEvents || !data.getEvents.length
               ? `Looks like you don't have an event yet? Create your first event.`
               : `You can always create new events.`}
           </p>
@@ -77,8 +73,8 @@ export default function HomePage() {
             spacing={4}
             templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
           >
-            {data &&
-              data.map((event: Event) => (
+            {data?.getEvents &&
+              data.getEvents.map((event) => (
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   transition={{ delay: 0.1 }}
@@ -126,6 +122,6 @@ export default function HomePage() {
           </SimpleGrid>
         </section>
       </div>
-    </main>
+    </>
   );
 }

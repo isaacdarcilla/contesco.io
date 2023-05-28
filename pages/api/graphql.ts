@@ -34,7 +34,6 @@ const limiter = rateLimit({
 
 const schema = await buildSchema({
   resolvers: [EventResolver],
-  emitSchemaFile: true,
 });
 
 const server = new ApolloServer({

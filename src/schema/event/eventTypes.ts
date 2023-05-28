@@ -1,5 +1,4 @@
 import { ObjectType, Field, ID } from "type-graphql";
-
 @ObjectType()
 export class Event {
   @Field(() => ID)
