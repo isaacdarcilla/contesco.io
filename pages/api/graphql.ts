@@ -5,8 +5,7 @@ import { buildSchema } from "type-graphql";
 import Cors from "micro-cors";
 import { PrismaClient } from "@prisma/client";
 import rateLimit from "@/src/utils/rateLimiter";
-import { resolvers } from "@/prisma/generated/type-graphql";
-import { EventResolver } from "@/src/resolvers/users/eventResolver";
+import { EventResolver } from "@/src/schema/event/eventResolver";
 
 const cors = Cors({
   origin:
@@ -35,6 +34,7 @@ const limiter = rateLimit({
 
 const schema = await buildSchema({
   resolvers: [EventResolver],
+  emitSchemaFile: true,
 });
 
 const server = new ApolloServer({

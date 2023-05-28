@@ -31,7 +31,6 @@ export default function HomePage() {
 
   const direction = searchParams?.get("direction") ?? "asc";
   const column = searchParams?.get("column") ?? "createdAt";
-  // const queryArgs = { column: column, direction: direction };
 
   const { isLoading, isError, data } = useQuery(
     ["events", { column, direction }],
