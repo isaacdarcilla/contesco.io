@@ -1,0 +1,1 @@
+export { EventContestantsArgs } from "./EventContestantsArgs";

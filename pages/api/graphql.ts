@@ -1,17 +1,12 @@
 import "reflect-metadata";
 import { ApolloServer } from "apollo-server-micro";
 import { getSession } from "next-auth/react";
-import {
-  buildSchema,
-  Field,
-  ID,
-  ObjectType,
-  Query,
-  Resolver,
-} from "type-graphql";
+import { buildSchema } from "type-graphql";
 import Cors from "micro-cors";
 import { PrismaClient } from "@prisma/client";
-import rateLimit from "@/src/global/rateLimiter";
+import rateLimit from "@/src/utils/rateLimiter";
+import { resolvers } from "@/prisma/generated/type-graphql";
+import { EventResolver } from "@/src/resolvers/users/eventResolver";
 
 const cors = Cors({
   origin:
@@ -19,6 +14,14 @@ const cors = Cors({
 });
 
 const prisma = new PrismaClient();
+
+export interface TContext {
+  prisma: typeof prisma;
+  user?: {
+    name?: string;
+    email: string;
+  };
+}
 
 export interface TContext {
   prisma: typeof prisma;
@@ -30,22 +33,8 @@ const limiter = rateLimit({
   uniqueTokenPerInterval: 500,
 });
 
-@ObjectType()
-export class Dog {
-  @Field(() => ID)
-  name!: string;
-}
-
-@Resolver(Dog)
-export class DogsResolver {
-  @Query(() => [Dog])
-  dogs(): Dog[] {
-    return [{ name: "Bob" }];
-  }
-}
-
 const schema = await buildSchema({
-  resolvers: [DogsResolver],
+  resolvers: [EventResolver],
 });
 
 const server = new ApolloServer({
@@ -53,8 +42,8 @@ const server = new ApolloServer({
   cache: "bounded",
   context: async ({ req }) => {
     const session = await getSession({ req });
-    const email = session?.user?.email;
-    return { prisma, email };
+    const user = session?.user;
+    return { prisma, user };
   },
   csrfPrevention: true,
 });

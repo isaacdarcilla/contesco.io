@@ -20,6 +20,15 @@ export const authOptions = {
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    jwt({ token, user }) {
+      return token;
+    },
+    session({ session, token }) {
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);

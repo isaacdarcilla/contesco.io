@@ -1,0 +1,17 @@
+export declare enum ContestantScalarFieldEnum {
+  id = "id",
+  eventId = "eventId",
+  userId = "userId",
+  firstName = "firstName",
+  middleName = "middleName",
+  lastName = "lastName",
+  gender = "gender",
+  age = "age",
+  nationality = "nationality",
+  birthDate = "birthDate",
+  phoneNumber = "phoneNumber",
+  email = "email",
+  photo = "photo",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}

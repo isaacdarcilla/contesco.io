@@ -1,0 +1,14 @@
+export { AggregateContestantArgs } from "./AggregateContestantArgs";
+export { CreateManyContestantArgs } from "./CreateManyContestantArgs";
+export { CreateOneContestantArgs } from "./CreateOneContestantArgs";
+export { DeleteManyContestantArgs } from "./DeleteManyContestantArgs";
+export { DeleteOneContestantArgs } from "./DeleteOneContestantArgs";
+export { FindFirstContestantArgs } from "./FindFirstContestantArgs";
+export { FindFirstContestantOrThrowArgs } from "./FindFirstContestantOrThrowArgs";
+export { FindManyContestantArgs } from "./FindManyContestantArgs";
+export { FindUniqueContestantArgs } from "./FindUniqueContestantArgs";
+export { FindUniqueContestantOrThrowArgs } from "./FindUniqueContestantOrThrowArgs";
+export { GroupByContestantArgs } from "./GroupByContestantArgs";
+export { UpdateManyContestantArgs } from "./UpdateManyContestantArgs";
+export { UpdateOneContestantArgs } from "./UpdateOneContestantArgs";
+export { UpsertOneContestantArgs } from "./UpsertOneContestantArgs";

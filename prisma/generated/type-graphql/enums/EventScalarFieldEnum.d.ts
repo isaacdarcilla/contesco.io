@@ -1,0 +1,16 @@
+export declare enum EventScalarFieldEnum {
+  id = "id",
+  userId = "userId",
+  name = "name",
+  description = "description",
+  organizer = "organizer",
+  type = "type",
+  category = "category",
+  tags = "tags",
+  banner = "banner",
+  slug = "slug",
+  eventStarts = "eventStarts",
+  eventEnds = "eventEnds",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}

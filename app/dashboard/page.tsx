@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import axios from "axios";
-import truncateText from "@/src/global/helper";
+import truncateText from "@/src/utils/helper";
 import { ArrowRight } from "react-feather";
 import EventFilter from "@/components/filter/EventFilter";
 import { useSearchParams } from "next/navigation";
@@ -31,6 +31,7 @@ export default function HomePage() {
 
   const direction = searchParams?.get("direction") ?? "asc";
   const column = searchParams?.get("column") ?? "createdAt";
+  // const queryArgs = { column: column, direction: direction };
 
   const { isLoading, isError, data } = useQuery(
     ["events", { column, direction }],

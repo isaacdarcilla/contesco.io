@@ -7,6 +7,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../prisma/generated/type-graphql"
+  emitTranspiledCode = true
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String  @map("user_id")
