@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { getEventById } from "@/lib/services/eventsService";
-import rateLimit from "@/lib/global/rateLimiter";
+import { getEventById } from "@/src/services/eventsService";
+import rateLimit from "@/src/global/rateLimiter";
 
 const limiter = rateLimit({
   interval: 60 * 1000,

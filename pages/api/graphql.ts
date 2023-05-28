@@ -11,7 +11,7 @@ import {
 } from "type-graphql";
 import Cors from "micro-cors";
 import { PrismaClient } from "@prisma/client";
-import rateLimit from "@/lib/global/rateLimiter";
+import rateLimit from "@/src/global/rateLimiter";
 
 const cors = Cors({
   origin:

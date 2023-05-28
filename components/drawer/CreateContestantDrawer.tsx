@@ -23,7 +23,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/lib/constants";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/src/constants";
 
 const ContestantSchema = z.object({
   photo: z

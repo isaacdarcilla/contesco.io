@@ -3,7 +3,7 @@
 import CreateEventDrawer from "@/components/drawer/CreateEventDrawer";
 import Skeleton from "@/components/loading/Skeleton";
 import CustomToast from "@/components/toast/CustomToast";
-import Event from "@/lib/types/Event";
+import Event from "@/src/types/Event";
 import {
   Button,
   Card,
@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import axios from "axios";
-import truncateText from "@/lib/global/helper";
+import truncateText from "@/src/global/helper";
 import { ArrowRight } from "react-feather";
 import EventFilter from "@/components/filter/EventFilter";
 import { useSearchParams } from "next/navigation";

@@ -3,7 +3,7 @@
 import CreateContestantDrawer from "@/components/drawer/CreateContestantDrawer";
 import Skeleton from "@/components/loading/Skeleton";
 import CustomToast from "@/components/toast/CustomToast";
-import Search from "@/lib/types/Search";
+import Search from "@/src/types/Search";
 import {
   Breadcrumb,
   BreadcrumbItem,
