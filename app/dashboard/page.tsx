@@ -18,24 +18,14 @@ import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import truncateText from "@/src/utils/helper";
 import { ArrowRight } from "react-feather";
-import EventFilter from "@/components/filter/EventFilter";
-import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { getEvents } from "@/src/api";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const { data: session, status } = useSession();
-  const searchParams = useSearchParams();
 
-  const direction = searchParams?.get("direction") ?? "asc";
-  const column = searchParams?.get("column") ?? "createdAt";
-
-  const queryArgs = { column, direction };
-
-  const { isLoading, isError, data } = useQuery(["events", queryArgs], () =>
-    getEvents(queryArgs)
-  );
+  const { isLoading, isError, data } = useQuery(["events"], () => getEvents());
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
@@ -58,15 +48,23 @@ export default function HomePage() {
       <CustomToast />
       <div className="w-full h-full flex flex-col container">
         <section className="container p-12 mx-auto">
-          <p className="text-xl font-bold text-white">Hi, {email ?? "user"}!</p>
-          <p className="text-white text-sm space-y-3 mb-5">
-            {!data?.getEvents || !data.getEvents.length
-              ? `Looks like you don't have an event yet? Create your first event.`
-              : `You can always create new events.`}
-          </p>
           <div className="flex justify-between">
+            <div>
+              <p className="text-xl font-bold text-white">
+                Hi, {email ?? "user"}!
+              </p>
+              <p className="text-white text-sm space-y-3 mb-5">
+                {!data?.getEvents || !data.getEvents.length
+                  ? `Looks like you don't have an event yet? Create your first event.`
+                  : `You can always create new events.`}
+              </p>
+            </div>
+            <div className="hidden lg:inline">
+              <CreateEventDrawer />
+            </div>
+          </div>
+          <div className="sm:hidden">
             <CreateEventDrawer />
-            <EventFilter />
           </div>
 
           <SimpleGrid
@@ -119,7 +117,6 @@ export default function HomePage() {
                   </Card>
                 </motion.div>
               ))}
-            ;
           </SimpleGrid>
         </section>
       </div>
