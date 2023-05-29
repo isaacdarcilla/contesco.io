@@ -22,9 +22,8 @@ import { Plus, Save } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
-import CustomToast from "../toast/CustomToast";
-import axios from "axios";
 import { motion } from "framer-motion";
+import { createEvent } from "@/src/api";
 
 const EventSchema = z.object({
   eventName: z
@@ -47,16 +46,6 @@ const EventSchema = z.object({
 
 type EventData = z.infer<typeof EventSchema>;
 
-const createEvent = async (form: EventData) => {
-  const response = await axios.post("/api/events/create", form);
-
-  if (response.status !== 200) {
-    throw new Error("An error occurred");
-  }
-
-  return response.data;
-};
-
 export default function CreateEventDrawer() {
   const queryClient = useQueryClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -69,29 +58,34 @@ export default function CreateEventDrawer() {
     resolver: zodResolver(EventSchema),
   });
 
-  const { isLoading, mutate } = useMutation(createEvent, {
-    onSuccess: () => {
-      reset();
-      onClose();
-      queryClient.invalidateQueries("events");
-      toast.success("New event created", {
-        duration: 10000,
-      });
-    },
-    onError: () => {
-      toast.error("An error occurred", {
-        duration: 10000,
-      });
-    },
-  });
+  const { isLoading, mutate } = useMutation(createEvent);
 
   const onSubmit: SubmitHandler<EventData> = async (form: EventData) => {
-    mutate(form);
+    mutate(
+      {
+        input: {
+          name: form.eventName,
+          organizer: form.organizerName,
+          category: form.categoryName,
+          description: form.eventDescription,
+        },
+      },
+      {
+        onSuccess: () => {
+          reset();
+          onClose();
+          queryClient.invalidateQueries("events");
+          toast.success("New event created");
+        },
+        onError: () => {
+          toast.error("An error occurred");
+        },
+      }
+    );
   };
 
   return (
     <>
-      <CustomToast />
       <motion.div whileHover={{ scale: 1.03 }}>
         <Button
           leftIcon={<Plus size="15" />}

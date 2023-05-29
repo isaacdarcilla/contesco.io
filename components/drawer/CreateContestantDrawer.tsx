@@ -68,14 +68,10 @@ export default function CreateContestantDrawer() {
       reset();
       onClose();
       queryClient.invalidateQueries("contestants");
-      toast.success("New contestant created", {
-        duration: 10000,
-      });
+      toast.success("New contestant created");
     },
     onError: () => {
-      toast.error("An error occurred", {
-        duration: 10000,
-      });
+      toast.error("An error occurred");
     },
   });
 

@@ -1,7 +1,6 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import type { TContext } from "../../../pages/api/graphql";
 import { CreateEventInput, Event } from "./eventTypes";
-import { createEvent } from "@/src/services/eventsService";
 
 @Resolver()
 export class EventResolver {
@@ -33,9 +32,9 @@ export class EventResolver {
     @Arg("input", () => CreateEventInput)
     { name, organizer, category, description }: CreateEventInput,
     @Ctx() { prisma, user }: TContext
-  ): Promise<Event> {
+  ): Promise<String> {
     try {
-      return await prisma.event.create({
+      const result = await prisma.event.create({
         data: {
           name: name,
           organizer: organizer,
@@ -44,6 +43,8 @@ export class EventResolver {
           description: description,
         },
       });
+
+      return result.name;
     } catch (err: any) {
       console.error(err);
       throw new Error(err.message);

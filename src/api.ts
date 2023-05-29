@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { getSdk } from "./generated/graphql";
 
 const gqlClient = new GraphQLClient(process.env.NEXT_PUBLIC_GQL_ENDPOINT ?? "");
-export const { getEvents } = getSdk(gqlClient);
+export const { getEvents, createEvent } = getSdk(gqlClient);
 
 export const queryClient = new QueryClient({
   defaultOptions: {

@@ -38,9 +38,7 @@ export default function HomePage() {
   }
 
   if (isError) {
-    toast.error("An error occurred", {
-      duration: 10000,
-    });
+    toast.error("An error occurred");
   }
 
   return (

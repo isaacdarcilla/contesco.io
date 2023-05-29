@@ -41,7 +41,7 @@ export type Event = {
   __typename?: "Event";
   category: Scalars["String"]["output"];
   description: Scalars["String"]["output"];
-  id: Scalars["ID"]["output"];
+  id: Scalars["String"]["output"];
   name: Scalars["String"]["output"];
   organizer: Scalars["String"]["output"];
 };
