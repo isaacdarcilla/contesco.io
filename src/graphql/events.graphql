@@ -5,3 +5,7 @@ query getEvents {
     description
   }
 }
+
+mutation createEvent($input: CreateEventInput!) {
+  createEvent(input: $input)
+}

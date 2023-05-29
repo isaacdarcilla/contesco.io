@@ -1,6 +1,7 @@
-import { Arg, Ctx, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import type { TContext } from "../../../pages/api/graphql";
-import { Event } from "./eventTypes";
+import { CreateEventInput, Event } from "./eventTypes";
+import { createEvent } from "@/src/services/eventsService";
 
 @Resolver()
 export class EventResolver {
@@ -19,6 +20,28 @@ export class EventResolver {
         },
         orderBy: {
           [column]: direction,
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+      throw new Error(err.message);
+    }
+  }
+
+  @Mutation(() => String)
+  async createEvent(
+    @Arg("input", () => CreateEventInput)
+    { name, organizer, category, description }: CreateEventInput,
+    @Ctx() { prisma, user }: TContext
+  ): Promise<Event> {
+    try {
+      return await prisma.event.create({
+        data: {
+          name: name,
+          organizer: organizer,
+          user: { connect: { email: user?.email! } },
+          category: category,
+          description: description,
         },
       });
     } catch (err: any) {

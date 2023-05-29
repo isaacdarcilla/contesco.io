@@ -30,6 +30,13 @@ export type Scalars = {
   Float: { input: number; output: number };
 };
 
+export type CreateEventInput = {
+  category: Scalars["String"]["input"];
+  description: Scalars["String"]["input"];
+  name: Scalars["String"]["input"];
+  organizer: Scalars["String"]["input"];
+};
+
 export type Event = {
   __typename?: "Event";
   category: Scalars["String"]["output"];
@@ -37,6 +44,15 @@ export type Event = {
   id: Scalars["ID"]["output"];
   name: Scalars["String"]["output"];
   organizer: Scalars["String"]["output"];
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  createEvent: Scalars["String"]["output"];
+};
+
+export type MutationCreateEventArgs = {
+  input: CreateEventInput;
 };
 
 export type Query = {
@@ -52,7 +68,6 @@ export type QueryGetEventsArgs = {
 export type GetEventsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetEventsQuery = {
-  length: any;
   __typename?: "Query";
   getEvents?: Array<{
     __typename?: "Event";
@@ -62,6 +77,15 @@ export type GetEventsQuery = {
   }> | null;
 };
 
+export type CreateEventMutationVariables = Exact<{
+  input: CreateEventInput;
+}>;
+
+export type CreateEventMutation = {
+  __typename?: "Mutation";
+  createEvent: string;
+};
+
 export const GetEventsDocument = gql`
   query getEvents {
     getEvents {
@@ -69,6 +93,11 @@ export const GetEventsDocument = gql`
       name
       description
     }
+  }
+`;
+export const CreateEventDocument = gql`
+  mutation createEvent($input: CreateEventInput!) {
+    createEvent(input: $input)
   }
 `;
 
@@ -101,6 +130,20 @@ export function getSdk(
           }),
         "getEvents",
         "query"
+      );
+    },
+    createEvent(
+      variables: CreateEventMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<CreateEventMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateEventMutation>(CreateEventDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "createEvent",
+        "mutation"
       );
     },
   };
