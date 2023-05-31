@@ -6,6 +6,9 @@ export class Event {
   id: string;
 
   @Field(() => String)
+  userId: string;
+
+  @Field(() => String)
   name: string;
 
   @Field(() => String)
@@ -16,6 +19,30 @@ export class Event {
 
   @Field(() => String)
   category: string;
+
+  @Field(() => String, { nullable: true })
+  type: string | null;
+
+  @Field(() => String, { nullable: true })
+  tags: string | null;
+
+  @Field(() => String, { nullable: true })
+  banner: string | null;
+
+  @Field(() => String, { nullable: true })
+  slug: string | null;
+
+  @Field(() => String, { nullable: true })
+  eventStarts: Date | null;
+
+  @Field(() => String, { nullable: true })
+  eventEnds: Date | null;
+
+  @Field(() => Date)
+  createdAt: Date | null;
+
+  @Field(() => Date)
+  updatedAt: Date | null;
 }
 
 @InputType()

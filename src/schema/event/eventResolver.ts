@@ -27,6 +27,26 @@ export class EventResolver {
     }
   }
 
+  @Query(() => Event, { nullable: true })
+  async getEventById(
+    @Arg("eventId", () => String, { nullable: true }) eventId: string,
+    @Ctx() { prisma, user }: TContext
+  ): Promise<Event | null> {
+    try {
+      return await prisma.event.findFirst({
+        where: {
+          id: eventId ? { equals: eventId } : undefined,
+          user: {
+            email: user?.email!,
+          },
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+      throw new Error(err.message);
+    }
+  }
+
   @Mutation(() => String)
   async createEvent(
     @Arg("input", () => CreateEventInput)

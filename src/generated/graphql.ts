@@ -28,6 +28,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  DateTime: { input: any; output: any };
 };
 
 export type CreateEventInput = {
@@ -39,11 +40,20 @@ export type CreateEventInput = {
 
 export type Event = {
   __typename?: "Event";
+  banner?: Maybe<Scalars["String"]["output"]>;
   category: Scalars["String"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   description: Scalars["String"]["output"];
+  eventEnds?: Maybe<Scalars["String"]["output"]>;
+  eventStarts?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["String"]["output"];
   name: Scalars["String"]["output"];
   organizer: Scalars["String"]["output"];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  tags?: Maybe<Scalars["String"]["output"]>;
+  type?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
+  userId: Scalars["String"]["output"];
 };
 
 export type Mutation = {
@@ -57,7 +67,12 @@ export type MutationCreateEventArgs = {
 
 export type Query = {
   __typename?: "Query";
+  getEventById?: Maybe<Array<Event>>;
   getEvents?: Maybe<Array<Event>>;
+};
+
+export type QueryGetEventByIdArgs = {
+  eventId?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryGetEventsArgs = {
@@ -77,6 +92,30 @@ export type GetEventsQuery = {
   }> | null;
 };
 
+export type GetEventByIdQueryVariables = Exact<{
+  eventId?: InputMaybe<Scalars["String"]["input"]>;
+}>;
+
+export type GetEventByIdQuery = {
+  __typename?: "Query";
+  getEventById?: Array<{
+    __typename?: "Event";
+    id: string;
+    name: string;
+    description: string;
+    organizer: string;
+    type?: string | null;
+    category: string;
+    tags?: string | null;
+    banner?: string | null;
+    slug?: string | null;
+    eventStarts?: string | null;
+    eventEnds?: string | null;
+    createdAt: any;
+    updatedAt: any;
+  }> | null;
+};
+
 export type CreateEventMutationVariables = Exact<{
   input: CreateEventInput;
 }>;
@@ -92,6 +131,25 @@ export const GetEventsDocument = gql`
       id
       name
       description
+    }
+  }
+`;
+export const GetEventByIdDocument = gql`
+  query getEventById($eventId: String) {
+    getEventById(eventId: $eventId) {
+      id
+      name
+      description
+      organizer
+      type
+      category
+      tags
+      banner
+      slug
+      eventStarts
+      eventEnds
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -129,6 +187,20 @@ export function getSdk(
             ...wrappedRequestHeaders,
           }),
         "getEvents",
+        "query"
+      );
+    },
+    getEventById(
+      variables?: GetEventByIdQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<GetEventByIdQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetEventByIdQuery>(GetEventByIdDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "getEventById",
         "query"
       );
     },

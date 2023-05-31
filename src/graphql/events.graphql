@@ -6,6 +6,24 @@ query getEvents {
   }
 }
 
+query getEventById($eventId: String) {
+  getEventById(eventId: $eventId) {
+    id
+    name
+    description
+    organizer
+    type
+    category
+    tags
+    banner
+    slug
+    eventStarts
+    eventEnds
+    createdAt
+    updatedAt
+  }
+}
+
 mutation createEvent($input: CreateEventInput!) {
   createEvent(input: $input)
 }
