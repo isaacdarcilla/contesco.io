@@ -3,6 +3,7 @@
 import CreateContestantDrawer from "@/components/drawer/CreateContestantDrawer";
 import Skeleton from "@/components/loading/Skeleton";
 import CustomToast from "@/components/toast/CustomToast";
+import { getEventById } from "@/src/api";
 import Search from "@/src/interface/searchInterface";
 import {
   Breadcrumb,
@@ -15,7 +16,6 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,15 +24,22 @@ import { useQuery } from "react-query";
 
 export default function EventPage({ params }: Search) {
   const router = useRouter();
-  const { isLoading, data } = useQuery("event", () =>
-    axios.get(`/api/events/${params.slug}`).then((res) => res.data)
+  const eventId = params.slug;
+  const queryArgs = { eventId };
+
+  const { isLoading, data: event } = useQuery(
+    ["event", eventId],
+    () => getEventById(queryArgs),
+    {
+      select: (data) => data.getEventById,
+    }
   );
 
   if (isLoading) {
     return <Skeleton center={true} />;
   }
 
-  if (!data) {
+  if (!event) {
     return router.push("/dashboard");
   }
 
@@ -52,7 +59,7 @@ export default function EventPage({ params }: Search) {
                 </BreadcrumbItem>
               </Breadcrumb>
               <p className="text-xl font-bold text-white space-y-4">
-                {data?.name}
+                {event.name}
               </p>
             </div>
             <div className="my-2">

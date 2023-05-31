@@ -25,7 +25,13 @@ export default function HomePage() {
   const [email, setEmail] = useState("");
   const { data: session, status } = useSession();
 
-  const { isLoading, isError, data } = useQuery(["events"], () => getEvents());
+  const {
+    isLoading,
+    isError,
+    data: events,
+  } = useQuery(["events"], () => getEvents(), {
+    select: (data) => data.getEvents,
+  });
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
@@ -52,7 +58,7 @@ export default function HomePage() {
                 Hi, {email ?? "user"}!
               </p>
               <p className="text-white text-sm space-y-3 mb-5">
-                {!data?.getEvents || !data.getEvents.length
+                {!events || !events.length
                   ? `Looks like you don't have an event yet? Create your first event.`
                   : `You can always create new events.`}
               </p>
@@ -70,8 +76,8 @@ export default function HomePage() {
             spacing={4}
             templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
           >
-            {data?.getEvents &&
-              data.getEvents.map((event) => (
+            {events &&
+              events.map((event) => (
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   transition={{ delay: 0.1 }}

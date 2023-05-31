@@ -6,7 +6,7 @@ query getEvents {
   }
 }
 
-query getEventById($eventId: String) {
+query getEventById($eventId: String!) {
   getEventById(eventId: $eventId) {
     id
     name

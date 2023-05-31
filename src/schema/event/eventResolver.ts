@@ -29,7 +29,7 @@ export class EventResolver {
 
   @Query(() => Event, { nullable: true })
   async getEventById(
-    @Arg("eventId", () => String, { nullable: true }) eventId: string,
+    @Arg("eventId", () => String) eventId: string,
     @Ctx() { prisma, user }: TContext
   ): Promise<Event | null> {
     try {

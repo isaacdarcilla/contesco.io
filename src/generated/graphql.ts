@@ -67,12 +67,12 @@ export type MutationCreateEventArgs = {
 
 export type Query = {
   __typename?: "Query";
-  getEventById?: Maybe<Array<Event>>;
+  getEventById?: Maybe<Event>;
   getEvents?: Maybe<Array<Event>>;
 };
 
 export type QueryGetEventByIdArgs = {
-  eventId?: InputMaybe<Scalars["String"]["input"]>;
+  eventId: Scalars["String"]["input"];
 };
 
 export type QueryGetEventsArgs = {
@@ -93,12 +93,12 @@ export type GetEventsQuery = {
 };
 
 export type GetEventByIdQueryVariables = Exact<{
-  eventId?: InputMaybe<Scalars["String"]["input"]>;
+  eventId: Scalars["String"]["input"];
 }>;
 
 export type GetEventByIdQuery = {
   __typename?: "Query";
-  getEventById?: Array<{
+  getEventById?: {
     __typename?: "Event";
     id: string;
     name: string;
@@ -113,7 +113,7 @@ export type GetEventByIdQuery = {
     eventEnds?: string | null;
     createdAt: any;
     updatedAt: any;
-  }> | null;
+  } | null;
 };
 
 export type CreateEventMutationVariables = Exact<{
@@ -135,7 +135,7 @@ export const GetEventsDocument = gql`
   }
 `;
 export const GetEventByIdDocument = gql`
-  query getEventById($eventId: String) {
+  query getEventById($eventId: String!) {
     getEventById(eventId: $eventId) {
       id
       name
@@ -191,7 +191,7 @@ export function getSdk(
       );
     },
     getEventById(
-      variables?: GetEventByIdQueryVariables,
+      variables: GetEventByIdQueryVariables,
       requestHeaders?: GraphQLClientRequestHeaders
     ): Promise<GetEventByIdQuery> {
       return withWrapper(
