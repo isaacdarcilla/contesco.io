@@ -25,6 +25,10 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/src/constants";
 
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
+
 const ContestantSchema = z.object({
   photo: z
     .any()
@@ -37,6 +41,34 @@ const ContestantSchema = z.object({
       (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       "Only .jpg, .jpeg, .png and .webp files are accepted."
     ),
+  first_name: z
+    .string()
+    .min(2, "Field must contain at least 2 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  middle_name: z
+    .string()
+    .min(2, "Field must contain at least 2 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  last_name: z
+    .string()
+    .min(2, "Field must contain at least 2 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  gender: z
+    .string()
+    .min(2, "Field must contain at least 2 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  nationality: z
+    .string()
+    .min(2, "Field must contain at least 2 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  phone_number: z
+    .string()
+    .min(11, "Field must contain at least 11 characters.")
+    .regex(phoneRegex, "Field must be a phone number."),
+  email: z
+    .string()
+    .min(2, "Field must contain at least 2 characters.")
+    .max(25, "Field must contain at most 25 characters."),
 });
 
 type ContestantData = z.infer<typeof ContestantSchema>;
@@ -147,7 +179,7 @@ export default function CreateContestantDrawer() {
                   <>{errors.photo?.message}</>
                 </FormHelperText>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.first_name != null}>
                 <Input
                   placeholder="First name"
                   backgroundColor="brand.200"
@@ -155,9 +187,17 @@ export default function CreateContestantDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  {...register("first_name")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.first_name?.message}</>
+                </FormHelperText>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.middle_name != null}>
                 <Input
                   placeholder="Middle name"
                   backgroundColor="brand.200"
@@ -165,9 +205,17 @@ export default function CreateContestantDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  {...register("middle_name")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.middle_name?.message}</>
+                </FormHelperText>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.last_name != null}>
                 <Input
                   placeholder="Last name"
                   backgroundColor="brand.200"
@@ -175,9 +223,17 @@ export default function CreateContestantDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  {...register("last_name")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.last_name?.message}</>
+                </FormHelperText>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.gender != null}>
                 <Input
                   placeholder="Gender"
                   backgroundColor="brand.200"
@@ -185,9 +241,17 @@ export default function CreateContestantDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  {...register("gender")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.gender?.message}</>
+                </FormHelperText>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.nationality != null}>
                 <Input
                   placeholder="Nationality"
                   backgroundColor="brand.200"
@@ -195,9 +259,17 @@ export default function CreateContestantDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  {...register("nationality")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.nationality?.message}</>
+                </FormHelperText>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.phone_number != null}>
                 <Input
                   placeholder="Phone number"
                   backgroundColor="brand.200"
@@ -205,9 +277,17 @@ export default function CreateContestantDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  {...register("phone_number")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.phone_number?.message}</>
+                </FormHelperText>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={errors.email != null}>
                 <Input
                   placeholder="Email address"
                   backgroundColor="brand.200"
@@ -215,7 +295,15 @@ export default function CreateContestantDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  {...register("email")}
                 />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.email?.message}</>
+                </FormHelperText>
               </FormControl>
             </div>
           </DrawerBody>
