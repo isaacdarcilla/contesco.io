@@ -45,10 +45,7 @@ const ContestantSchema = z.object({
     .string()
     .min(2, "Field must contain at least 2 characters.")
     .max(25, "Field must contain at most 25 characters."),
-  middle_name: z
-    .string()
-    .min(2, "Field must contain at least 2 characters.")
-    .max(25, "Field must contain at most 25 characters."),
+  middle_name: z.string().max(25, "Field must contain at most 25 characters."),
   last_name: z
     .string()
     .min(2, "Field must contain at least 2 characters.")
@@ -56,6 +53,10 @@ const ContestantSchema = z.object({
   gender: z
     .string()
     .min(2, "Field must contain at least 2 characters.")
+    .max(25, "Field must contain at most 25 characters."),
+  age: z
+    .string()
+    .min(1, "Field must contain at least 1 character.")
     .max(25, "Field must contain at most 25 characters."),
   nationality: z
     .string()
@@ -231,6 +232,24 @@ export default function CreateContestantDrawer() {
                   textColor="red.400"
                 >
                   <>{errors.last_name?.message}</>
+                </FormHelperText>
+              </FormControl>
+              <FormControl isInvalid={errors.age != null}>
+                <Input
+                  placeholder="Age"
+                  backgroundColor="brand.200"
+                  textColor="gray.400"
+                  focusBorderColor="blue.400"
+                  variant="filled"
+                  rounded="sm"
+                  {...register("age")}
+                />
+                <FormHelperText
+                  marginTop="1"
+                  fontSize="small"
+                  textColor="red.400"
+                >
+                  <>{errors.age?.message}</>
                 </FormHelperText>
               </FormControl>
               <FormControl isInvalid={errors.gender != null}>
