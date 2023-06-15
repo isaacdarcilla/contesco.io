@@ -11,7 +11,7 @@ import CustomToast from "@/components/toast/CustomToast";
 import Link from "next/link";
 import { useAnimate } from "framer-motion";
 
-const montserrat = Montserrat();
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export default function LoginPage() {
   const router = useRouter();

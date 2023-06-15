@@ -71,8 +71,6 @@ export class CreateContestantInput {
   @Field(() => String)
   lastName: string;
 
-  @MinLength(1)
-  @MaxLength(25)
   @Field(() => Number)
   age: number;
 

@@ -76,7 +76,7 @@ export default function EventPage({ params }: Search) {
                   </MenuButton>
                 </motion.div>
                 <MenuList bgColor="brand.100" border="hidden">
-                  <CreateContestantDrawer />
+                  <CreateContestantDrawer eventId={eventId} />
                   <MenuItem
                     bgColor="brand.100"
                     textColor="white"
