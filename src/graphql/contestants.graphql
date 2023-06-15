@@ -1,3 +1,20 @@
+query getContestants {
+  getContestants {
+    id
+    firstName
+    middleName
+    lastName
+    gender
+    age
+    nationality
+    phoneNumber
+    email
+    photo
+    createdAt
+    updatedAt
+  }
+}
+
 mutation createContestant($input: CreateContestantInput!) {
   createContestant(input: $input)
 }

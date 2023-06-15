@@ -31,6 +31,38 @@ export type Scalars = {
   DateTime: { input: any; output: any };
 };
 
+export type Contestant = {
+  __typename?: "Contestant";
+  age: Scalars["Float"]["output"];
+  birthDate?: Maybe<Scalars["String"]["output"]>;
+  createdAt: Scalars["DateTime"]["output"];
+  email: Scalars["String"]["output"];
+  eventId: Scalars["String"]["output"];
+  firstName: Scalars["String"]["output"];
+  gender: Scalars["String"]["output"];
+  id: Scalars["String"]["output"];
+  lastName: Scalars["String"]["output"];
+  middleName?: Maybe<Scalars["String"]["output"]>;
+  nationality?: Maybe<Scalars["String"]["output"]>;
+  phoneNumber: Scalars["String"]["output"];
+  photo?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
+  userId: Scalars["String"]["output"];
+};
+
+export type CreateContestantInput = {
+  age: Scalars["Float"]["input"];
+  email: Scalars["String"]["input"];
+  eventId: Scalars["String"]["input"];
+  firstName: Scalars["String"]["input"];
+  gender: Scalars["String"]["input"];
+  lastName: Scalars["String"]["input"];
+  middleName?: InputMaybe<Scalars["String"]["input"]>;
+  nationality?: InputMaybe<Scalars["String"]["input"]>;
+  phoneNumber: Scalars["String"]["input"];
+  photo?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type CreateEventInput = {
   category: Scalars["String"]["input"];
   description: Scalars["String"]["input"];
@@ -58,7 +90,12 @@ export type Event = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  createContestant: Scalars["String"]["output"];
   createEvent: Scalars["String"]["output"];
+};
+
+export type MutationCreateContestantArgs = {
+  input: CreateContestantInput;
 };
 
 export type MutationCreateEventArgs = {
@@ -67,8 +104,14 @@ export type MutationCreateEventArgs = {
 
 export type Query = {
   __typename?: "Query";
+  getContestants?: Maybe<Array<Contestant>>;
   getEventById?: Maybe<Event>;
   getEvents?: Maybe<Array<Event>>;
+};
+
+export type QueryGetContestantsArgs = {
+  column?: InputMaybe<Scalars["String"]["input"]>;
+  direction?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryGetEventByIdArgs = {
@@ -80,6 +123,36 @@ export type QueryGetEventsArgs = {
   direction?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type GetContestantsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetContestantsQuery = {
+  __typename?: "Query";
+  getContestants?: Array<{
+    __typename?: "Contestant";
+    id: string;
+    firstName: string;
+    middleName?: string | null;
+    lastName: string;
+    gender: string;
+    age: number;
+    nationality?: string | null;
+    phoneNumber: string;
+    email: string;
+    photo?: string | null;
+    createdAt: any;
+    updatedAt: any;
+  }> | null;
+};
+
+export type CreateContestantMutationVariables = Exact<{
+  input: CreateContestantInput;
+}>;
+
+export type CreateContestantMutation = {
+  __typename?: "Mutation";
+  createContestant: string;
+};
+
 export type GetEventsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetEventsQuery = {
@@ -89,6 +162,8 @@ export type GetEventsQuery = {
     id: string;
     name: string;
     description: string;
+    createdAt: any;
+    updatedAt: any;
   }> | null;
 };
 
@@ -125,12 +200,37 @@ export type CreateEventMutation = {
   createEvent: string;
 };
 
+export const GetContestantsDocument = gql`
+  query getContestants {
+    getContestants {
+      id
+      firstName
+      middleName
+      lastName
+      gender
+      age
+      nationality
+      phoneNumber
+      email
+      photo
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const CreateContestantDocument = gql`
+  mutation createContestant($input: CreateContestantInput!) {
+    createContestant(input: $input)
+  }
+`;
 export const GetEventsDocument = gql`
   query getEvents {
     getEvents {
       id
       name
       description
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -176,6 +276,36 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper
 ) {
   return {
+    getContestants(
+      variables?: GetContestantsQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<GetContestantsQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetContestantsQuery>(
+            GetContestantsDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "getContestants",
+        "query"
+      );
+    },
+    createContestant(
+      variables: CreateContestantMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<CreateContestantMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateContestantMutation>(
+            CreateContestantDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "createContestant",
+        "mutation"
+      );
+    },
     getEvents(
       variables?: GetEventsQueryVariables,
       requestHeaders?: GraphQLClientRequestHeaders

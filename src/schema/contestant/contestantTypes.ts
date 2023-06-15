@@ -1,5 +1,5 @@
 import { MaxLength, MinLength } from "class-validator";
-import { Field, InputType, ObjectType } from "type-graphql";
+import { ObjectType, Field, InputType } from "type-graphql";
 
 @ObjectType()
 export class Contestant {
@@ -24,8 +24,8 @@ export class Contestant {
   @Field(() => String)
   gender: string;
 
-  @Field(() => String)
-  age: string;
+  @Field(() => Number)
+  age: number;
 
   @Field(() => String, { nullable: true })
   nationality: string | null;

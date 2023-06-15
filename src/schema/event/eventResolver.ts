@@ -1,5 +1,5 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import type { TContext } from "../../../pages/api/graphql";
+import type { TContext } from "@/pages/api/graphql";
 import { CreateEventInput, Event } from "./eventTypes";
 
 @Resolver()
@@ -9,7 +9,7 @@ export class EventResolver {
     @Arg("column", () => String, { nullable: true }) column: string,
     @Arg("direction", () => String, { nullable: true }) direction: string,
     @Ctx() { prisma, user }: TContext
-  ): Promise<Event[]> {
+  ): Promise<Event[] | null> {
     try {
       return await prisma.event.findMany({
         where: {

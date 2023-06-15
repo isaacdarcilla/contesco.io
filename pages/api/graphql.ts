@@ -6,6 +6,7 @@ import Cors from "micro-cors";
 import { PrismaClient } from "@prisma/client";
 import rateLimit from "@/src/utils/rateLimiter";
 import { EventResolver } from "@/src/schema/event/eventResolver";
+import { ContestantResolver } from "@/src/schema/contestant/contestantResolver";
 
 const cors = Cors({
   origin:
@@ -33,7 +34,7 @@ const limiter = rateLimit({
 });
 
 const schema = await buildSchema({
-  resolvers: [EventResolver],
+  resolvers: [EventResolver, ContestantResolver],
 });
 
 const server = new ApolloServer({

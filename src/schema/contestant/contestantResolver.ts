@@ -1,9 +1,32 @@
+import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import type { TContext } from "@/pages/api/graphql";
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
-import { CreateContestantInput } from "./contestantTypes";
+import { Contestant, CreateContestantInput } from "./contestantTypes";
 
 @Resolver()
 export class ContestantResolver {
+  @Query(() => [Contestant], { nullable: true })
+  async getContestants(
+    @Arg("column", () => String, { nullable: true }) column: string,
+    @Arg("direction", () => String, { nullable: true }) direction: string,
+    @Ctx() { prisma, user }: TContext
+  ): Promise<Contestant[] | null> {
+    try {
+      return await prisma.contestant.findMany({
+        where: {
+          user: {
+            email: user?.email!,
+          },
+        },
+        orderBy: {
+          [column]: direction,
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+      throw new Error(err.message);
+    }
+  }
+
   @Mutation(() => String)
   async createContestant(
     @Arg("input", () => CreateContestantInput)

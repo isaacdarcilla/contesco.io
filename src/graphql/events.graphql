@@ -3,6 +3,8 @@ query getEvents {
     id
     name
     description
+    createdAt
+    updatedAt
   }
 }
 

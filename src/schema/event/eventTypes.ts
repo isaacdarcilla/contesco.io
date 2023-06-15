@@ -1,5 +1,6 @@
 import { MaxLength, MinLength } from "class-validator";
 import { ObjectType, Field, InputType } from "type-graphql";
+
 @ObjectType()
 export class Event {
   @Field(() => String)
