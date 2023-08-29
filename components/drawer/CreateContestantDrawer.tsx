@@ -22,7 +22,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-hot-toast";
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/src/constants";
 import { createContestant } from "@/src/api";
 
 const phoneRegex = new RegExp(
@@ -30,17 +29,17 @@ const phoneRegex = new RegExp(
 );
 
 const ContestantSchema = z.object({
-  photo: z
-    .any()
-    .refine((files) => files?.length == 1, "Field is required.")
-    .refine(
-      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      `Max file size is 5MB.`
-    )
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Only .jpg, .jpeg, .png and .webp files are accepted."
-    ),
+  //  photo: z
+  //    .any()
+  //    .refine((files) => files?.length == 1, "Field is required.")
+  //    .refine(
+  //      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
+  //      `Max file size is 5MB.`
+  //    )
+  //    .refine(
+  //      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+  //      "Only .jpg, .jpeg, .png and .webp files are accepted."
+  //    ),
   firstName: z
     .string()
     .min(2, "Field must contain at least 2 characters.")
@@ -55,7 +54,7 @@ const ContestantSchema = z.object({
     .min(2, "Field must contain at least 2 characters.")
     .max(25, "Field must contain at most 25 characters."),
   age: z
-    .string()
+    .number()
     .min(1, "Field must contain at least 1 character.")
     .max(25, "Field must contain at most 25 characters."),
   nationality: z
@@ -98,7 +97,6 @@ export default function CreateContestantDrawer({
     mutate(
       {
         input: {
-          photo: "test",
           firstName: form.firstName,
           middleName: form.middleName,
           lastName: form.lastName,
@@ -146,7 +144,7 @@ export default function CreateContestantDrawer({
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
-        size="md"
+        size="sm"
         colorScheme="brand.100"
       >
         <DrawerOverlay />
@@ -165,31 +163,32 @@ export default function CreateContestantDrawer({
               <Kbd>Esc</Kbd> key to close the form.
             </p>
             <div className="space-y-3">
-              <FormControl
-                className="align-center my-auto"
-                isInvalid={errors.photo != null}
-              >
-                <Input
-                  type="file"
-                  textAlign="center"
-                  alignContent="center"
-                  placeholder="Photo"
-                  backgroundColor="brand.200"
-                  textColor="gray.400"
-                  focusBorderColor="blue.400"
-                  variant="filled"
-                  autoFocus={true}
-                  rounded="sm"
-                  {...register("photo")}
-                />
-                <FormHelperText
-                  marginTop="1"
-                  fontSize="small"
-                  textColor="red.400"
-                >
-                  <>{errors.photo?.message}</>
-                </FormHelperText>
-              </FormControl>
+              {/*<FormControl*/}
+              {/*  className="align-center my-auto"*/}
+              {/*  isInvalid={errors.photo != null}*/}
+              {/*>*/}
+              {/*  <Input*/}
+              {/*    type="file"*/}
+              {/*    textAlign="center"*/}
+              {/*    alignContent="center"*/}
+              {/*    placeholder="Photo"*/}
+              {/*    backgroundColor="brand.200"*/}
+              {/*    textColor="gray.400"*/}
+              {/*    focusBorderColor="blue.400"*/}
+              {/*    variant="filled"*/}
+              {/*    autoFocus={true}*/}
+              {/*    rounded="sm"*/}
+              {/*    size="sm"*/}
+              {/*    {...register("photo")}*/}
+              {/*  />*/}
+              {/*  <FormHelperText*/}
+              {/*    marginTop="1"*/}
+              {/*    fontSize="small"*/}
+              {/*    textColor="red.400"*/}
+              {/*  >*/}
+              {/*    <>{errors.photo?.message}</>*/}
+              {/*  </FormHelperText>*/}
+              {/*</FormControl>*/}
               <FormControl isInvalid={errors.firstName != null}>
                 <Input
                   placeholder="First name"
@@ -198,6 +197,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("firstName")}
                 />
                 <FormHelperText
@@ -216,6 +216,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("middleName")}
                 />
                 <FormHelperText
@@ -234,6 +235,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("lastName")}
                 />
                 <FormHelperText
@@ -252,6 +254,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("age")}
                 />
                 <FormHelperText
@@ -270,6 +273,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("gender")}
                 />
                 <FormHelperText
@@ -288,6 +292,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("nationality")}
                 />
                 <FormHelperText
@@ -306,6 +311,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("phoneNumber")}
                 />
                 <FormHelperText
@@ -324,6 +330,7 @@ export default function CreateContestantDrawer({
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("email")}
                 />
                 <FormHelperText

@@ -103,7 +103,7 @@ export default function CreateEventDrawer() {
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
-        size="md"
+        size="sm"
         colorScheme="brand.100"
       >
         <DrawerOverlay />
@@ -130,6 +130,7 @@ export default function CreateEventDrawer() {
                   variant="filled"
                   autoFocus={true}
                   rounded="sm"
+                  size="sm"
                   {...register("eventName")}
                 />
                 <FormHelperText
@@ -149,6 +150,7 @@ export default function CreateEventDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("organizerName")}
                 />
                 <FormHelperText
@@ -168,6 +170,7 @@ export default function CreateEventDrawer() {
                   focusBorderColor="blue.400"
                   variant="filled"
                   rounded="sm"
+                  size="sm"
                   {...register("categoryName")}
                 />
                 <FormHelperText
@@ -187,6 +190,7 @@ export default function CreateEventDrawer() {
                   resize="vertical"
                   rounded="sm"
                   variant="filled"
+                  size="sm"
                   rows={5}
                   {...register("eventDescription")}
                 />

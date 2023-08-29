@@ -37,7 +37,7 @@ export default function HomePage() {
     if (status === "authenticated" && session?.user?.email) {
       setEmail(session.user.email);
     }
-  }, []);
+  }, [session?.user?.email, status]);
 
   if (isLoading) {
     return <Skeleton center={true} />;
